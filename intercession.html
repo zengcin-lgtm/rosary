@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>所有代禱意向 | 線上玫瑰經祈禱團體</title>
+    
+    <!-- 引入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入 Font Awesome 圖示 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 全域變數：布農族風格配色 (Bunun Theme) --- */
+        :root {
+            /* 主色：深炭黑 */
+            --primary-color: #1a1a1a; 
+            /* 次要色：傳統紅 */
+            --secondary-color: #b91c1c; 
+            /* 強調色：小米黃 */
+            --accent-color: #f59e0b; 
+            
+            /* 背景色：米白 */
+            --bg-color: #fdfbf7;
+            /* 區塊背景：純白 */
+            --section-bg: #ffffff;
+            /* 邊框色 */
+            --border-color: #e5e7eb;
+            
+            --text-color: #262626; 
+            --light-text: #525252; 
+            --white: #ffffff;
+        }
+
+        /* 菱形分隔線 */
+        .totem-divider {
+            height: 20px;
+            width: 120px;
+            margin: 20px auto 0;
+            background-image: 
+                linear-gradient(60deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color)), 
+                linear-gradient(120deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color));
+            background-position: 0 0, 0 0;
+            background-size: 20px 30px;
+            opacity: 0.9;
+        }
+
+        /* --- 基礎設定 --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            /* 背景加入極淡的粗布紋理 */
+            background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%231a1a1a' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            line-height: 1.7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Noto Serif TC', serif;
+            color: var(--primary-color);
+            letter-spacing: 0.05em;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- 導覽列 --- */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-top-bar {
+            height: 8px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--primary-color),
+                var(--primary-color) 20px,
+                var(--secondary-color) 20px,
+                var(--secondary-color) 40px,
+                var(--white) 40px,
+                var(--white) 50px
+            );
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon-box {
+            width: 44px;
+            height: 44px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            margin: 5px;
+        }
+
+        .logo-icon-box i { font-size: 1.2rem; margin-top: 5px; color: var(--accent-color); }
+
+        .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
+        .logo small { font-size: 0.75rem; font-weight: 400; color: var(--light-text); }
+
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+
+        .nav-links a {
+            font-weight: 600;
+            transition: color 0.3s;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .nav-links a:hover { color: var(--secondary-color); }
+
+        .cta-button-small {
+            background-color: var(--secondary-color);
+            color: var(--white) !important;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%, 0% 20%);
+        }
+
+        .cta-button-small:hover {
+            background-color: var(--primary-color);
+            color: var(--accent-color) !important;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* --- 頁面標題區塊 --- */
+        .page-header {
+            padding-top: 120px;
+            padding-bottom: 2rem;
+            text-align: center;
+            background-color: var(--bg-color);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            position: relative;
+            font-weight: 700;
+        }
+
+        /* --- 代禱牆列表 --- */
+        #intercession-list {
+            padding: 2rem 1.5rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            flex-grow: 1; /* 讓內容區撐開，footer 保持在底部 */
+        }
+
+        .wall-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 2rem; 
+        }
+        
+        .note-card { 
+            background-color: var(--white); 
+            padding: 2rem; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-top: 6px solid var(--primary-color);
+            border-bottom: 1px solid #ccc;
+            display: flex; 
+            flex-direction: column; 
+            transition: transform 0.2s; 
+            position: relative; 
+            min-height: 180px;
+        }
+        
+        .note-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2); 
+        }
+        
+        .note-card:nth-child(3n+1) { border-top-color: var(--primary-color); }
+        .note-card:nth-child(3n+2) { border-top-color: var(--secondary-color); }
+        .note-card:nth-child(3n+3) { border-top-color: var(--accent-color); }
+        
+        .note-header { 
+            display: flex; 
+            align-items: center; 
+            margin-bottom: 1rem; 
+            color: var(--light-text); 
+            font-size: 0.95rem; 
+            font-weight: 600; 
+        }
+        
+        .note-content { 
+            font-size: 1.1rem; 
+            line-height: 1.6; 
+            color: #222; 
+            margin-bottom: 1rem; 
+            flex-grow: 1; 
+            white-space: pre-wrap; 
+        }
+        
+        .note-footer { 
+            margin-top: auto; 
+            font-size: 0.85rem; 
+            color: #777; 
+            border-top: 1px dashed #ddd; 
+            padding-top: 0.8rem; 
+            text-align: right; 
+        }
+
+        /* --- 分頁導覽 (Pagination) --- */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 4rem;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background-color: var(--white);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .page-btn.active {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            border-color: #ccc;
+            color: #ccc;
+        }
+
+        /* --- 漂浮按鈕 --- */
+        .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 2000; }
+        .fab-btn {
+            width: 60px; height: 60px; background-color: var(--secondary-color); color: var(--white); 
+            transform: rotate(45deg);
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer;
+            transition: all 0.3s; border: 2px solid var(--white); text-decoration: none;
+        }
+        .fab-btn i { transform: rotate(-45deg); font-size: 1.5rem; }
+        .fab-btn:hover { background-color: var(--primary-color); border-color: var(--accent-color); }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--primary-color); color: var(--white); padding: 4rem 1.5rem; text-align: center;
+            border-top: 10px solid var(--secondary-color);
+            margin-top: auto;
+        }
+        .social-links a { font-size: 1.5rem; margin: 0 10px; color: var(--accent-color); transition: color 0.3s; }
+        .social-links a:hover { color: var(--white); }
+
+        @media (max-width: 768px) {
+            .nav-links { 
+                display: none; 
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background-color: var(--white); flex-direction: column; padding: 1.5rem;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.2); border-bottom: 5px solid var(--secondary-color);
+            }
+            .nav-links.active { display: flex; }
+            .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
+            .mobile-menu-btn { display: block; }
+            .fab-container { bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-top-bar"></div>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon-box"><i class="fa-solid fa-dove"></i></div>
+                <div class="logo-text">
+                    <span>線上玫瑰經祈禱</span>
+                    <small>每晚9點 LINE會議室</small>
+                </div>
+            </div>
+            <!-- 注意：這裡的連結都改為 index.html#section，因為這是獨立分頁 -->
+            <div class="nav-links">
+                <a href="index.html">回到首頁</a>
+                <a href="index.html#about">關於我們</a>
+                <a href="index.html#info">聚會資訊</a>
+                <a href="index.html#promote">加入善會</a>
+                <a href="intercession.html" style="color: var(--secondary-color);">代禱牆</a>
+                <a href="https://line.me/R/meeting/6e1105b1919945ddad5390853d75be5d" target="_blank" class="cta-button-small">進入會議室</a>
+            </div>
+            <div class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
+        </nav>
+    </header>
+
+    <!-- 頁面標題 -->
+    <section class="page-header">
+        <h2 class="section-title">代禱意向總覽<div class="totem-divider"></div></h2>
+        <p style="color: #666; max-width: 600px; margin: 0 auto;">
+            在這裡，我們彼此代禱，分擔重擔。<br>願天主的平安與您同在。
+        </p>
+    </section>
+
+    <!-- 代禱列表區塊 -->
+    <div id="intercession-list">
+        <div class="wall-grid" id="wallGrid">
+            <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+                <i class="fa-solid fa-spinner fa-spin"></i> 正在載入所有意向...
+            </div>
+        </div>
+
+        <!-- 分頁控制 -->
+        <div class="pagination" id="pagination">
+            <!-- 由 JS 生成 -->
+        </div>
+    </div>
+
+    <!-- 漂浮填寫按鈕 -->
+    <div class="fab-container">
+        <!-- 連結到 Google 表單 -->
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLN16UgWTei7_gYxX40iz0Vpkq7-OIrnTrd-8g6VqHR6mezg/viewform" target="_blank" class="fab-btn" title="填寫代禱意向">
+            <i class="fa-solid fa-pen"></i>
+        </a>
+    </div>
+
+    <footer>
+        <p style="font-size: 1.2rem; font-style: italic; margin-bottom: 2rem; font-family: 'Noto Serif TC', serif;">
+            「如果有人有幸加入玫瑰經善會，<br>他在世界各地都有為他祈禱的兄弟姐妹。」
+        </p>
+        <span style="display: block; margin-bottom: 3rem;">— 聖若翰・維雅納</span>
+        
+        <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem;">
+            <span style="font-weight:700; font-size: 1.2rem;">線上玫瑰經祈禱團體</span>
+            <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 1rem;">Online Rosary Prayer Group</p>
+            <div class="social-links">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-line"></i></a>
+                <a href="#"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+            <p style="font-size: 0.8rem; margin-top: 2rem; opacity: 0.6;">© 2025 Online Rosary Group.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // 【設定區】請在此填入您的資料
+        // ==========================================
+        // 1. Google 試算表的「發佈到網路 CSV 連結」
+        // 務必與 index.html 使用同一個連結
+        const googleSheetCSVUrl = ''; 
+        // ==========================================
+
+        const itemsPerPage = 12;
+        let allNotes = [];
+        let currentPage = 1;
+
+        // 範例資料
+        const demoNotes = Array.from({ length: 30 }, (_, i) => ({
+            name: i % 3 === 0 ? "瑪利亞" : (i % 3 === 1 ? "若瑟" : "匿名"),
+            content: `這是第 ${i + 1} 則測試代禱意向。請為我們祈禱，求主賜予平安與喜樂。`,
+            time: "2025/01/01"
+        }));
+
+        async function init() {
+            const grid = document.getElementById('wallGrid');
+            
+            try {
+                if (googleSheetCSVUrl && googleSheetCSVUrl.length > 10) {
+                    const response = await fetch(googleSheetCSVUrl);
+                    const data = await response.text();
+                    allNotes = parseCSV(data);
+                } else {
+                    console.log("未設定 CSV URL，顯示範例資料");
+                    allNotes = demoNotes;
+                }
+            } catch (error) {
+                console.error("讀取失敗:", error);
+                allNotes = demoNotes;
+            }
+
+            // 反轉陣列，讓最新的在最前面 (假設 CSV 是按時間順序 append)
+            allNotes.reverse();
+
+            renderPage(currentPage);
+            renderPagination();
+        }
+
+        function renderPage(page) {
+            const grid = document.getElementById('wallGrid');
+            grid.innerHTML = '';
+
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const pageNotes = allNotes.slice(startIndex, endIndex);
+
+            if (pageNotes.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;">沒有更多資料了。</div>';
+                return;
+            }
+
+            pageNotes.forEach(note => {
+                const card = document.createElement('div');
+                card.className = 'note-card';
+                const safeName = note.name || "主內弟兄/姊妹";
+                const safeContent = note.content || "";
+                const safeTime = note.time || "";
+
+                card.innerHTML = `
+                    <div class="note-header">
+                        <i class="fa-solid fa-feather" style="margin-right:8px; color: var(--secondary-color);"></i> ${safeName}
+                    </div>
+                    <div class="note-content">${safeContent}</div>
+                    <div class="note-footer">
+                        ${safeTime ? `<i class="fa-regular fa-clock"></i> ${safeTime}` : ''}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            
+            // 滾動到列表頂部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            const totalPages = Math.ceil(allNotes.length / itemsPerPage);
+
+            if (totalPages <= 1) return;
+
+            // 上一頁按鈕
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn';
+            prevBtn.innerHTML = '<i class="fa-solid fa-angle-left"></i>';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePaginationState();
+                    renderPage(currentPage);
+                }
+            };
+            pagination.appendChild(prevBtn);
+
+            // 頁碼按鈕 (簡單版：顯示所有頁碼，若頁數過多可再優化顯示邏輯)
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
+                btn.innerText = i;
+                btn.onclick = () => {
+                    currentPage = i;
+                    updatePaginationState();
+                    renderPage(currentPage);
+                };
+                pagination.appendChild(btn);
+            }
+
+            // 下一頁按鈕
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn';
+            nextBtn.innerHTML = '<i class="fa-solid fa-angle-right"></i>';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePaginationState();
+                    renderPage(currentPage);
+                }
+            };
+            pagination.appendChild(nextBtn);
+        }
+
+        function updatePaginationState() {
+            // 重新渲染分頁按鈕狀態 (active class)
+            renderPagination();
+        }
+
+        function parseCSV(text) {
+            const lines = text.split('\n');
+            const result = [];
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                const matches = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
+                const row = matches || lines[i].split(',');
+                const cleanRow = row.map(cell => cell.replace(/^"|"$/g, '').replace(/""/g, '"'));
+
+                if (cleanRow.length >= 2) { 
+                    result.push({
+                        time: cleanRow[0] ? cleanRow[0].split(' ')[0] : '', 
+                        name: cleanRow[1],
+                        content: cleanRow[2]
+                    });
+                }
+            }
+            return result;
+        }
+
+        // 啟動
+        init();
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
