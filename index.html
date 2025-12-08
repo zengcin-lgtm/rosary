@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>線上玫瑰經祈禱團體 | 布農風格版</title>
+    <title>線上玫瑰經祈禱團體 | 每晚9點 LINE會議室</title>
     <meta name="description" content="由玫瑰經善會成員組成的線上祈禱群組，每晚9點在LINE會議室共融祈禱。">
     
     <!-- 引入 Google Fonts -->
@@ -116,7 +116,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative; /* 為了讓手機選單定位 */
+            position: relative;
         }
 
         .logo {
@@ -375,26 +375,12 @@
         @media (max-width: 768px) {
             .nav-links { 
                 display: none; 
-                /* 手機版選單樣式 */
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                flex-direction: column;
-                padding: 1.5rem;
-                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
-                border-bottom: 5px solid var(--secondary-color);
+                position: absolute; top: 100%; left: 0; width: 100%;
+                background-color: var(--white); flex-direction: column; padding: 1.5rem;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.2); border-bottom: 5px solid var(--secondary-color);
             }
-            .nav-links.active {
-                display: flex;
-            }
-            .nav-links a {
-                margin: 10px 0;
-                font-size: 1.1rem;
-                width: 100%;
-                text-align: center;
-            }
+            .nav-links.active { display: flex; }
+            .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
             .mobile-menu-btn { display: block; }
             #home h1 { font-size: 2.8rem; }
             .about-container { grid-template-columns: 1fr; }
@@ -507,13 +493,20 @@
                 <i class="fa-solid fa-spinner fa-spin"></i> 正在載入代禱意向...
             </div>
         </div>
+        
+        <!-- 新增：查看更多按鈕 -->
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="intercession.html" class="cta-button-small" style="background-color: var(--white); color: var(--primary-color) !important; border: 2px solid var(--primary-color); display: inline-block; clip-path: none; padding: 0.8rem 2rem;">
+                <i class="fa-solid fa-list-ul"></i> 查看所有意向
+            </a>
+        </div>
     </section>
     
     <!-- 漂浮按鈕 (FAB) -->
     <div class="fab-container">
         <span class="fab-tooltip">填寫代禱意向</span>
         <!-- 【重要】請將 href 換成您的 Google 表單填寫連結 -->
-        <a href="https://docs.google.com/forms" target="_blank" class="fab-btn" id="fabBtn">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLN16UgWTei7_gYxX40iz0Vpkq7-OIrnTrd-8g6VqHR6mezg/viewform" target="_blank" class="fab-btn" id="fabBtn">
             <i class="fa-solid fa-pen"></i>
         </a>
     </div>
