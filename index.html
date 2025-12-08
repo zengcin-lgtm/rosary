@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>線上玫瑰經祈禱團體 | 每晚9點 LINE會議室</title>
+    <title>線上玫瑰經祈禱團體 | 布農風格版</title>
     <meta name="description" content="由玫瑰經善會成員組成的線上祈禱群組，每晚9點在LINE會議室共融祈禱。">
     
     <!-- 引入 Google Fonts -->
@@ -15,37 +15,53 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- 全域變數：聖母藍配色 + 原民編織元素 --- */
+        /* --- 全域變數：布農族風格配色 (Bunun Theme) --- */
         :root {
-            /* 主色：深藍 */
-            --primary-color: #1e40af; 
-            /* 次要色：天藍 */
-            --secondary-color: #3b82f6; 
-            /* 強調色：金色 */
-            --accent-color: #fbbf24; 
-            /* 背景色：極淺藍白 */
-            --bg-color: #f0f9ff;
+            /* 主色：深炭黑 (傳統服飾基底) */
+            --primary-color: #1a1a1a; 
+            /* 次要色：傳統紅 (生命力、織紋) */
+            --secondary-color: #b91c1c; 
+            /* 強調色：小米黃 (豐收、光芒) */
+            --accent-color: #f59e0b; 
+            
+            /* 背景色：米白 (像麻布原本的顏色) */
+            --bg-color: #fdfbf7;
             /* 區塊背景：純白 */
             --section-bg: #ffffff;
             /* 邊框色 */
-            --border-color: #dbeafe;
+            --border-color: #e5e7eb;
             
-            --text-color: #374151; 
-            --light-text: #6b7280; 
+            --text-color: #262626; 
+            --light-text: #525252; 
             --white: #ffffff;
         }
 
-        /* 菱形分隔線 */
-        .totem-divider {
-            height: 15px;
-            width: 100px;
-            margin: 15px auto 0;
+        /* --- 布農風格三角圖騰 (CSS 幾何模擬) --- */
+        /* 用於導覽列底部或區塊邊緣 */
+        .bunun-pattern-strip {
+            height: 12px;
+            width: 100%;
+            background-color: var(--primary-color);
             background-image: 
-                linear-gradient(45deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color)), 
-                linear-gradient(45deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color));
-            background-position: 0 0, 10px 10px;
+                linear-gradient(45deg, var(--secondary-color) 25%, transparent 25%), 
+                linear-gradient(-45deg, var(--secondary-color) 25%, transparent 25%), 
+                linear-gradient(45deg, transparent 75%, var(--secondary-color) 75%), 
+                linear-gradient(-45deg, transparent 75%, var(--secondary-color) 75%);
             background-size: 20px 20px;
-            opacity: 0.8;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+        }
+
+        /* 三角山形分隔線 */
+        .totem-divider {
+            height: 20px;
+            width: 120px;
+            margin: 20px auto 0;
+            background-image: 
+                linear-gradient(60deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color)), 
+                linear-gradient(120deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color));
+            background-position: 0 0, 0 0;
+            background-size: 20px 30px;
+            opacity: 0.9;
         }
 
         /* --- 基礎設定 --- */
@@ -55,10 +71,8 @@
             font-family: 'Noto Sans TC', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-            /* 背景加入極淡的編織紋理 */
-            background-image: radial-gradient(var(--secondary-color) 0.5px, transparent 0.5px), radial-gradient(var(--secondary-color) 0.5px, var(--bg-color) 0.5px);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
+            /* 背景加入極淡的粗布紋理 */
+            background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%231a1a1a' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
             line-height: 1.7;
             scroll-behavior: smooth;
         }
@@ -74,12 +88,25 @@
         /* --- 導覽列 --- */
         header {
             background-color: var(--white);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-top: 5px solid var(--primary-color);
+        }
+        
+        /* 導覽列頂部裝飾條 */
+        .header-top-bar {
+            height: 8px;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--primary-color),
+                var(--primary-color) 20px,
+                var(--secondary-color) 20px,
+                var(--secondary-color) 40px,
+                var(--white) 40px,
+                var(--white) 50px
+            );
         }
 
         nav {
@@ -101,19 +128,18 @@
         }
 
         .logo-icon-box {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             background-color: var(--primary-color);
             color: var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
-            transform: rotate(45deg);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* 三角形 */
             margin: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .logo-icon-box i { transform: rotate(-45deg); font-size: 1.2rem; }
+        .logo-icon-box i { font-size: 1.2rem; margin-top: 5px; color: var(--accent-color); }
 
         .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
         .logo small { font-size: 0.75rem; font-weight: 400; color: var(--light-text); }
@@ -121,7 +147,7 @@
         .nav-links { display: flex; gap: 2rem; align-items: center; }
 
         .nav-links a {
-            font-weight: 500;
+            font-weight: 600;
             transition: color 0.3s;
             color: var(--text-color);
             position: relative;
@@ -132,16 +158,16 @@
         .cta-button-small {
             background-color: var(--secondary-color);
             color: var(--white) !important;
-            padding: 0.5rem 1.2rem;
-            border-radius: 4px;
+            padding: 0.6rem 1.4rem;
             font-size: 0.9rem;
             transition: all 0.3s;
-            border: 1px solid var(--primary-color);
+            /* 幾何切角 */
+            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%, 0% 20%);
         }
 
         .cta-button-small:hover {
             background-color: var(--primary-color);
-            box-shadow: 0 4px 8px rgba(30, 64, 175, 0.3);
+            color: var(--accent-color) !important;
         }
 
         .mobile-menu-btn {
@@ -153,13 +179,14 @@
 
         /* --- 區塊通用設定 --- */
         section { padding: 6rem 1.5rem; max-width: 1000px; margin: 0 auto; }
-        .section-title { text-align: center; margin-bottom: 3.5rem; font-size: 2.2rem; position: relative; }
+        .section-title { text-align: center; margin-bottom: 3.5rem; font-size: 2.2rem; position: relative; font-weight: 700; }
         
         /* --- 首頁主視覺 (Hero) --- */
         #home {
             height: 90vh;
             min-height: 600px;
-            background: linear-gradient(rgba(30, 64, 175, 0.7), rgba(59, 130, 246, 0.5)), url('https://images.unsplash.com/photo-1549646468-f9b077a6f3b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            /* 使用較深沈的濾鏡，突顯莊重感 */
+            background: linear-gradient(rgba(26, 26, 26, 0.7), rgba(26, 26, 26, 0.5)), url('https://images.unsplash.com/photo-1549646468-f9b077a6f3b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -170,128 +197,186 @@
             color: var(--white);
             padding-top: 80px;
             position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% 95%, 50% 100%, 0 95%);
+        }
+
+        /* 底部山形遮罩 */
+        #home::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: var(--bg-color);
+            clip-path: polygon(0 100%, 0 0, 20% 60%, 40% 0, 60% 60%, 80% 0, 100% 60%, 100% 100%);
+            /* 模擬群山 */
+            opacity: 0.1; /* 隱約可見 */
         }
 
         #home .subtitle {
-            font-size: 1.4rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            letter-spacing: 3px;
-            color: #bfdbfe;
-            text-transform: uppercase;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--accent-color); /* 小米黃 */
+            background-color: rgba(0,0,0,0.6);
+            padding: 0.5rem 1rem;
+            display: inline-block;
         }
 
         #home h1 {
             color: var(--white);
-            font-size: 3.5rem;
+            font-size: 4rem;
             margin-bottom: 1.5rem;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            text-shadow: 0 4px 15px rgba(0,0,0,0.8);
             line-height: 1.2;
         }
 
         #home p {
-            font-size: 1.25rem;
-            margin-bottom: 2.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
             max-width: 700px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            font-weight: 300;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+            font-weight: 400;
         }
 
         .hero-btn {
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            padding: 1rem 3rem;
-            font-size: 1.1rem;
+            background-color: var(--secondary-color); /* 紅色 */
+            color: var(--white);
+            padding: 1.2rem 3.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
+            border: 2px solid var(--white);
+            transition: all 0.3s;
+            /* 菱形風格 */
             clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-            padding-left: 4rem; padding-right: 4rem;
-            transition: transform 0.2s, background 0.2s;
         }
 
-        .hero-btn:hover { transform: translateY(-3px); background-color: #fcd34d; }
+        .hero-btn:hover { 
+            transform: translateY(-5px); 
+            background-color: var(--accent-color); /* 黃色 */
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
 
         /* --- 關於我們 --- */
         .about-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-        .about-text h3 { font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--secondary-color); display: flex; align-items: center; gap: 10px; }
-        .about-text h3::before { content: ''; display: inline-block; width: 12px; height: 12px; background-color: var(--accent-color); transform: rotate(45deg); }
-        .about-image { width: 100%; height: 350px; border: 4px double var(--secondary-color); padding: 5px; border-radius: 2px; position: relative; }
-        .about-image img { width: 100%; height: 100%; object-fit: cover; }
-        .about-image::after { content: ''; position: absolute; bottom: -10px; right: -10px; width: 40px; height: 40px; border-bottom: 4px solid var(--accent-color); border-right: 4px solid var(--accent-color); }
+        .about-text h3 { font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--secondary-color); border-left: 5px solid var(--primary-color); padding-left: 1rem; }
+        
+        .about-image { 
+            width: 100%; height: 350px; 
+            /* 部落風邊框：粗黑框 + 紅角 */
+            border: 4px solid var(--primary-color); 
+            padding: 10px; 
+            background-color: var(--white);
+            position: relative; 
+        }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) contrast(110%); }
+        
+        /* 裝飾角落：紅黃相間 */
+        .about-image::before { content: ''; position: absolute; top: -5px; left: -5px; width: 30px; height: 30px; border-top: 5px solid var(--secondary-color); border-left: 5px solid var(--secondary-color); }
+        .about-image::after { content: ''; position: absolute; bottom: -5px; right: -5px; width: 30px; height: 30px; border-bottom: 5px solid var(--accent-color); border-right: 5px solid var(--accent-color); }
 
         /* --- 聚會資訊 --- */
-        #info { background-color: var(--white); margin-top: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 1px solid var(--border-color); position: relative; overflow: hidden; }
-        #info::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 10px; background: repeating-linear-gradient(45deg, var(--secondary-color), var(--secondary-color) 10px, var(--white) 10px, var(--white) 20px); }
-        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center; }
-        .info-card { padding: 2rem; transition: all 0.3s; position: relative; }
-        .info-icon { width: 80px; height: 80px; margin: 0 auto 1.5rem auto; background-color: #eff6ff; transform: rotate(45deg); display: flex; align-items: center; justify-content: center; border: 2px solid var(--secondary-color); }
-        .info-icon i { transform: rotate(-45deg); font-size: 2rem; color: var(--primary-color); }
-        .info-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+        #info { background-color: var(--white); margin-top: 2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 2px solid var(--primary-color); position: relative; }
         
+        /* 頂部編織紋 */
+        #info .bunun-strip {
+            height: 15px;
+            width: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                var(--primary-color),
+                var(--primary-color) 10px,
+                var(--secondary-color) 10px,
+                var(--secondary-color) 20px
+            );
+        }
+
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center; padding: 3rem 2rem; }
+        .info-card { padding: 1rem; transition: all 0.3s; position: relative; }
+        
+        /* 菱形圖示 */
+        .info-icon { 
+            width: 80px; height: 80px; margin: 0 auto 1.5rem auto; 
+            background-color: var(--primary-color); 
+            transform: rotate(45deg); 
+            display: flex; align-items: center; justify-content: center; 
+            border: 3px solid var(--accent-color);
+        }
+        .info-icon i { transform: rotate(-45deg); font-size: 2rem; color: var(--white); }
+        .info-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--text-color); }
+
         /* --- 推廣善會 --- */
         #promote {
-            background-color: #fff; border: 2px solid var(--border-color); margin-top: 4rem; position: relative;
-            background-image: 
-                linear-gradient(var(--primary-color), var(--primary-color)), 
-                linear-gradient(var(--primary-color), var(--primary-color)),
-                linear-gradient(var(--primary-color), var(--primary-color)), 
-                linear-gradient(var(--primary-color), var(--primary-color));
-            background-repeat: no-repeat;
-            background-size: 4px 30px, 30px 4px;
-            background-position: top left, top left, top right, top right, bottom left, bottom left, bottom right, bottom right; 
+            background-color: #fff; border: 3px solid var(--primary-color); margin-top: 4rem; position: relative;
         }
-        #promote::before { content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 1px dashed var(--secondary-color); pointer-events: none; }
-        .flyer-box { text-align: center; padding: 2rem; }
-        .organizer-info { margin-top: 2rem; font-size: 1rem; color: var(--primary-color); font-weight: 700; border-top: 2px dotted var(--accent-color); padding-top: 1.5rem; display: inline-block; }
+        /* 四角紅色三角形裝飾 */
+        #promote::before {
+            content: ''; position: absolute; top: 0; left: 0; 
+            border-top: 40px solid var(--secondary-color); border-right: 40px solid transparent; 
+        }
+        #promote::after {
+            content: ''; position: absolute; bottom: 0; right: 0; 
+            border-bottom: 40px solid var(--secondary-color); border-left: 40px solid transparent; 
+        }
 
-        /* --- 代禱牆 (Cards) --- */
+        .flyer-box { text-align: center; padding: 2rem; }
+        .organizer-info { 
+            margin-top: 2rem; font-size: 1.1rem; color: var(--primary-color); font-weight: 700; 
+            border-top: 2px solid var(--accent-color); padding-top: 1.5rem; display: inline-block; 
+        }
+
+        /* --- 代禱牆 --- */
         #prayer-wall { background-color: var(--bg-color); }
-        
         .wall-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
         
         .note-card { 
-            background-color: var(--white); padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border-left: 8px solid; display: flex; flex-direction: column; transition: transform 0.2s; position: relative; min-height: 180px;
+            background-color: var(--white); padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            /* 上方粗邊框，像織布的開頭 */
+            border-top: 6px solid var(--primary-color);
+            border-bottom: 1px solid #ccc;
+            display: flex; flex-direction: column; transition: transform 0.2s; position: relative; min-height: 180px;
         }
-        .note-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-        .note-card:nth-child(4n+1) { border-left-color: #1e40af; } /* 深藍 */
-        .note-card:nth-child(4n+2) { border-left-color: #3b82f6; } /* 亮藍 */
-        .note-card:nth-child(4n+3) { border-left-color: #fbbf24; } /* 金 */
-        .note-card:nth-child(4n+4) { border-left-color: #f472b6; } /* 粉紅 */
+        .note-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2); }
+        
+        /* 隨機分配不同的邊框色 */
+        .note-card:nth-child(3n+1) { border-top-color: var(--primary-color); } /* 黑 */
+        .note-card:nth-child(3n+2) { border-top-color: var(--secondary-color); } /* 紅 */
+        .note-card:nth-child(3n+3) { border-top-color: var(--accent-color); } /* 黃 */
         
         .note-header { display: flex; align-items: center; margin-bottom: 1rem; color: var(--light-text); font-size: 0.95rem; font-weight: 600; }
-        .note-content { font-size: 1.1rem; line-height: 1.6; color: #444; margin-bottom: 1rem; flex-grow: 1; white-space: pre-wrap; }
-        .note-footer { margin-top: auto; font-size: 0.85rem; color: #9ca3af; border-top: 2px dotted #f3f4f6; padding-top: 0.8rem; text-align: right; }
+        .note-content { font-size: 1.1rem; line-height: 1.6; color: #222; margin-bottom: 1rem; flex-grow: 1; white-space: pre-wrap; }
+        .note-footer { margin-top: auto; font-size: 0.85rem; color: #777; border-top: 1px dashed #ddd; padding-top: 0.8rem; text-align: right; }
 
         /* --- 漂浮按鈕 (FAB) --- */
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 2000; display: flex; flex-direction: column; align-items: end; }
-        .fab-tooltip { background-color: #333; color: #fff; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; margin-bottom: 10px; opacity: 0; transition: opacity 0.3s; pointer-events: none; white-space: nowrap; }
+        .fab-tooltip { background-color: var(--primary-color); color: var(--white); padding: 5px 10px; font-size: 0.8rem; margin-bottom: 10px; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
         .fab-btn {
-            width: 60px; height: 60px; background-color: var(--accent-color); color: var(--primary-color); border-radius: 50%;
+            width: 60px; height: 60px; background-color: var(--secondary-color); color: var(--white); 
+            /* 菱形按鈕 */
+            transform: rotate(45deg);
             display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); cursor: pointer;
             transition: all 0.3s; border: 2px solid var(--white); text-decoration: none;
         }
-        .fab-btn i { font-size: 1.5rem; }
-        .fab-btn:hover { transform: scale(1.1) rotate(90deg); background-color: #fcd34d; }
+        .fab-btn i { transform: rotate(-45deg); font-size: 1.5rem; } /* 圖示轉回來 */
+        .fab-btn:hover { background-color: var(--primary-color); border-color: var(--accent-color); }
         .fab-container:hover .fab-tooltip { opacity: 1; }
 
         /* --- Footer --- */
         footer {
             background-color: var(--primary-color); color: var(--white); padding: 4rem 1.5rem; text-align: center;
-            background-image: 
-                linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.05)), 
-                linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.05));
-            background-size: 20px 20px; background-position: 0 0, 10px 10px;
+            border-top: 10px solid var(--secondary-color);
         }
-        .social-links a { font-size: 1.5rem; margin: 0 10px; color: #93c5fd; transition: color 0.3s; }
-        .social-links a:hover { color: var(--accent-color); }
+        .social-links a { font-size: 1.5rem; margin: 0 10px; color: var(--accent-color); transition: color 0.3s; }
+        .social-links a:hover { color: var(--white); }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .mobile-menu-btn { display: block; }
-            #home h1 { font-size: 2.5rem; }
+            #home h1 { font-size: 2.8rem; }
             .about-container { grid-template-columns: 1fr; }
-            .hero-btn { clip-path: none; border-radius: 4px; padding: 1rem 2rem; }
+            .hero-btn { clip-path: none; border-radius: 0; padding: 1rem 2rem; }
             .fab-container { bottom: 20px; right: 20px; }
         }
     </style>
@@ -299,6 +384,7 @@
 <body>
 
     <header>
+        <div class="header-top-bar"></div>
         <nav>
             <div class="logo">
                 <div class="logo-icon-box"><i class="fa-solid fa-dove"></i></div>
@@ -312,7 +398,7 @@
                 <a href="#info">聚會資訊</a>
                 <a href="#promote">加入善會</a>
                 <a href="#prayer-wall">代禱牆</a>
-                <a href="#info" class="cta-button-small">進入會議室</a>
+                <a href="https://line.me/R/meeting/6e1105b1919945ddad5390853d75be5d" target="_blank" class="cta-button-small">進入會議室</a>
             </div>
             <div class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
         </nav>
@@ -343,7 +429,8 @@
 
     <!-- 聚會資訊 -->
     <section id="info">
-        <h2 class="section-title">聚會資訊<div class="totem-divider"></div></h2>
+        <div class="bunun-strip"></div>
+        <h2 class="section-title" style="margin-top: 2rem;">聚會資訊<div class="totem-divider"></div></h2>
         <div class="info-grid">
             <div class="info-card">
                 <div class="info-icon"><i class="fa-regular fa-clock"></i></div>
@@ -361,9 +448,9 @@
                 <p>歡迎所有人<br>不分教友與非教友</p>
             </div>
         </div>
-        <div style="text-align: center; margin-top: 3rem;">
-            <a href="#" onclick="alert('連結已複製！請開啟 LINE 貼上給朋友。')" class="cta-button-small" style="font-size: 1.1rem; padding: 1rem 3rem; background-color: #06c755; border-color:#06c755;">
-                <i class="fa-brands fa-line"></i> 取得會議連結
+        <div style="text-align: center; padding-bottom: 3rem;">
+            <a href="https://line.me/R/meeting/6e1105b1919945ddad5390853d75be5d" target="_blank" class="cta-button-small" style="font-size: 1.1rem; padding: 1rem 3rem; background-color: #06c755; border: none; clip-path: none; border-radius: 5px; color: white !important;">
+                <i class="fa-brands fa-line"></i> 進入會議室
             </a>
             <p style="margin-top:1rem; font-size: 0.9rem; color: #666;">(或加入我們的 LINE 群組)</p>
         </div>
@@ -380,7 +467,7 @@
                 道明會中華聖母準會省<br>玫瑰經推行人 葛維志 神父
             </div>
             <div style="margin-top: 2rem;">
-                <button onclick="alert('請聯繫我們索取報名表！')" class="cta-button-small" style="background-color: transparent; color: var(--primary-color) !important; border: 2px solid var(--primary-color);">
+                <button onclick="alert('請聯繫我們索取報名表！')" class="cta-button-small" style="background-color: transparent; color: var(--primary-color) !important; border: 2px solid var(--primary-color); clip-path: none;">
                     <i class="fa-solid fa-file-pen"></i> 詢問報名方式
                 </button>
             </div>
@@ -433,20 +520,16 @@
         // 【設定區】請在此填入您的資料
         // ==========================================
         
-        // 1. Google 表單的「填寫網址」 (點擊右下角按鈕會開啟這個網址)
+        // 1. Google 表單的「填寫網址」
         const googleFormLink = 'https://docs.google.com/forms/d/e/您的表單ID/viewform';
 
         // 2. Google 試算表的「發佈到網路 CSV 連結」
-        // 步驟：檔案 -> 共用 -> 發佈到網路 -> 選擇「表單回應」 -> 格式選「CSV」 -> 複製連結
-        // 範例：'https://docs.google.com/spreadsheets/d/e/2PACX-xxxxxx/pub?output=csv'
         const googleSheetCSVUrl = ''; 
 
         // ==========================================
 
-        // 設定漂浮按鈕連結
         document.getElementById('fabBtn').href = googleFormLink;
 
-        // 預設範例資料 (當還沒串接 Google Sheet 時顯示)
         const demoNotes = [
             { name: "瑪利亞", content: "請為家中的長輩健康祈禱，最近天氣變化大。", time: "範例資料" },
             { name: "若瑟", content: "感謝天主，這週的工作順利完成了！", time: "範例資料" },
@@ -474,13 +557,8 @@
                 notes = demoNotes;
             }
 
-            // 隨機洗牌
             shuffleArray(notes);
-
-            // 只取前 6 筆
             const selectedNotes = notes.slice(0, 6);
-
-            // 渲染
             grid.innerHTML = '';
             
             if (selectedNotes.length === 0) {
@@ -508,24 +586,16 @@
             });
         }
 
-        // CSV 解析器 (處理逗號與引號)
         function parseCSV(text) {
             const lines = text.split('\n');
             const result = [];
-            // 假設第一行是標題，從第二行開始
             for (let i = 1; i < lines.length; i++) {
                 if (!lines[i].trim()) continue;
-                
-                // 使用正則表達式正確分割 CSV (處理引號內的逗號)
                 const matches = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
                 const row = matches || lines[i].split(',');
-                
-                // 清理引號
                 const cleanRow = row.map(cell => cell.replace(/^"|"$/g, '').replace(/""/g, '"'));
 
                 if (cleanRow.length >= 2) { 
-                    // 欄位順序假設：[0]時間, [1]稱呼, [2]內容
-                    // 您可以依照實際表單調整 index
                     result.push({
                         time: cleanRow[0] ? cleanRow[0].split(' ')[0] : '', 
                         name: cleanRow[1],
@@ -544,7 +614,6 @@
         }
 
         fetchAndRenderNotes();
-
     </script>
 </body>
 </html>
