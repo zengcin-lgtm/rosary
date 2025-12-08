@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線上玫瑰經祈禱團體 | 每晚9點 LINE會議室</title>
+    <meta name="description" content="由玫瑰經善會成員組成的線上祈禱群組，每晚9點在LINE會議室共融祈禱。">
+    
+    <!-- 引入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- 全域變數：聖母藍配色 + 原民編織元素 --- */
+        :root {
+            /* 主色：深藍 */
+            --primary-color: #1e40af; 
+            /* 次要色：天藍 */
+            --secondary-color: #3b82f6; 
+            /* 強調色：金色 */
+            --accent-color: #fbbf24; 
+            /* 背景色：極淺藍白 */
+            --bg-color: #f0f9ff;
+            /* 區塊背景：純白 */
+            --section-bg: #ffffff;
+            /* 邊框色 */
+            --border-color: #dbeafe;
+            
+            --text-color: #374151; 
+            --light-text: #6b7280; 
+            --white: #ffffff;
+        }
+
+        /* --- 原住民編織圖騰 (CSS 幾何模擬) --- */
+        /* 定義一個菱形紋背景，用在區塊邊緣或裝飾 */
+        .weaving-pattern {
+            background-color: var(--white);
+            background-image: 
+                linear-gradient(135deg, #dbeafe 25%, transparent 25%), 
+                linear-gradient(225deg, #dbeafe 25%, transparent 25%), 
+                linear-gradient(45deg, #dbeafe 25%, transparent 25%), 
+                linear-gradient(315deg, #dbeafe 25%, transparent 25%);
+            background-position: 10px 0, 10px 0, 0 0, 0 0;
+            background-size: 20px 20px;
+            background-repeat: repeat;
+            opacity: 0.3; /* 淡淡的紋路 */
+        }
+
+        /* 菱形分隔線 */
+        .totem-divider {
+            height: 15px;
+            width: 100px;
+            margin: 15px auto 0;
+            background-image: 
+                linear-gradient(45deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color)), 
+                linear-gradient(45deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color));
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+            opacity: 0.8;
+        }
+
+        /* --- 基礎設定 --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            /* 背景加入極淡的編織紋理 */
+            background-image: radial-gradient(var(--secondary-color) 0.5px, transparent 0.5px), radial-gradient(var(--secondary-color) 0.5px, var(--bg-color) 0.5px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Noto Serif TC', serif;
+            color: var(--primary-color);
+            letter-spacing: 0.05em;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* --- 導覽列 --- */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            /* 頂部加入一條編織風格的藍色飾帶 */
+            border-top: 5px solid var(--primary-color);
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* Logo 圖示外加菱形框 */
+        .logo-icon-box {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(45deg); /* 菱形 */
+            margin: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .logo-icon-box i {
+            transform: rotate(-45deg); /* 轉回來 */
+            font-size: 1.2rem;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo small {
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--light-text);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-color);
+        }
+
+        .cta-button-small {
+            background-color: var(--secondary-color);
+            color: var(--white) !important;
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px; /* 改為稍微方正一點，呼應編織 */
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            /* 原民風格邊框裝飾 */
+            border: 1px solid var(--primary-color);
+        }
+
+        .cta-button-small:hover {
+            background-color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(30, 64, 175, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* --- 區塊通用設定 --- */
+        section {
+            padding: 6rem 1.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            font-size: 2.2rem;
+            position: relative;
+        }
+        
+        /* 使用 CSS 類別取代偽元素做分隔線 */
+
+        /* --- 首頁主視覺 (Hero) --- */
+        #home {
+            height: 90vh;
+            min-height: 600px;
+            background: linear-gradient(rgba(30, 64, 175, 0.7), rgba(59, 130, 246, 0.5)), url('https://images.unsplash.com/photo-1549646468-f9b077a6f3b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+            padding-top: 80px;
+            position: relative;
+            /* 底部波浪紋或編織紋遮罩 */
+            clip-path: polygon(0 0, 100% 0, 100% 95%, 50% 100%, 0 95%);
+        }
+
+        #home .subtitle {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+            color: #bfdbfe;
+            text-transform: uppercase;
+        }
+
+        #home h1 {
+            color: var(--white);
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.4);
+            line-height: 1.2;
+        }
+
+        #home p {
+            font-size: 1.25rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            font-weight: 300;
+        }
+
+        .hero-btn {
+            background-color: var(--accent-color);
+            color: var(--text-color);
+            padding: 1rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            /* 菱形按鈕風格 */
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
+            padding-left: 4rem; /* 補償切角 */
+            padding-right: 4rem;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            background-color: #fcd34d;
+        }
+
+        /* --- 關於我們 --- */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* 標題旁的小菱形裝飾 */
+        .about-text h3::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent-color);
+            transform: rotate(45deg);
+        }
+
+        .about-image {
+            width: 100%;
+            height: 350px;
+            /* 原民風格邊框：雙層線條 */
+            border: 4px double var(--secondary-color);
+            padding: 5px;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* 角落裝飾 */
+        .about-image::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            border-bottom: 4px solid var(--accent-color);
+            border-right: 4px solid var(--accent-color);
+        }
+
+        /* --- 聚會資訊 --- */
+        #info {
+            background-color: var(--white);
+            margin-top: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* 背景放編織紋 */
+        #info::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 10px;
+            background: repeating-linear-gradient(45deg, var(--secondary-color), var(--secondary-color) 10px, var(--white) 10px, var(--white) 20px);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .info-card {
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .info-icon {
+            /* 菱形背景圖示 */
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem auto;
+            background-color: #eff6ff;
+            transform: rotate(45deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--secondary-color);
+        }
+        
+        .info-icon i {
+            transform: rotate(-45deg);
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .info-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* --- 推廣善會 --- */
+        #promote {
+            background-color: #fff;
+            border: 2px solid var(--border-color);
+            margin-top: 4rem;
+            position: relative;
+            /* 四個角用 CSS 畫出部落風的直角 */
+            background-image: 
+                linear-gradient(var(--primary-color), var(--primary-color)), 
+                linear-gradient(var(--primary-color), var(--primary-color)),
+                linear-gradient(var(--primary-color), var(--primary-color)), 
+                linear-gradient(var(--primary-color), var(--primary-color));
+            background-repeat: no-repeat;
+            background-size: 4px 30px, 30px 4px; /* 線條粗細與長度 */
+            background-position: top left, top left, top right, top right, bottom left, bottom left, bottom right, bottom right; 
+            /* 這裡簡化，只做上下邊框的編織紋示意 */
+        }
+        
+        #promote::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px dashed var(--secondary-color);
+            pointer-events: none;
+        }
+
+        .flyer-box {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .organizer-info {
+            margin-top: 2rem;
+            font-size: 1rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            border-top: 2px dotted var(--accent-color);
+            padding-top: 1.5rem;
+            display: inline-block;
+        }
+
+        /* --- 代禱牆 --- */
+        #prayer-wall { background-color: var(--bg-color); }
+        
+        .prayer-input-area {
+            background: var(--white);
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin: 0 auto 4rem auto;
+            /* 頂部改為鋸齒狀編織紋路 (SVG) */
+            border-top: 5px solid var(--secondary-color); 
+            position: relative;
+        }
+        
+        .prayer-input-area::after {
+            content: '✦ ✦ ✦';
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+        }
+
+        .form-control { 
+            width: 100%; 
+            padding: 0.8rem; 
+            border: 2px solid #e5e7eb; 
+            border-radius: 0; /* 方正 */
+            font-family: inherit; 
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus { 
+            outline: none; 
+            border-color: var(--primary-color); 
+        }
+        
+        .submit-btn { 
+            background-color: var(--primary-color); 
+            color: var(--white); 
+            border: none; 
+            padding: 1rem 1.5rem; 
+            cursor: pointer; 
+            width: 100%; 
+            font-weight: 600;
+            margin-top: 1rem; 
+            transition: background 0.3s;
+            /* 模擬織帶按鈕 */
+            background-image: repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(255,255,255,0.1) 5px, rgba(255,255,255,0.1) 10px);
+        }
+        .submit-btn:hover { background-color: var(--secondary-color); }
+
+        /* 代禱卡片 */
+        .wall-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+            gap: 1.5rem; 
+        }
+        
+        .note-card { 
+            background-color: var(--white); 
+            padding: 1.5rem; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            /* 側邊裝飾：原民風格的幾何色塊 */
+            border-left: 8px solid; 
+            display: flex; 
+            flex-direction: column; 
+            transition: transform 0.2s;
+            position: relative;
+        }
+        
+        /* 分配不同的「部落色」（但在藍色系內變化） */
+        .note-card:nth-child(3n+1) { border-left-color: #1e40af; } /* 深藍 */
+        .note-card:nth-child(3n+2) { border-left-color: #3b82f6; } /* 亮藍 */
+        .note-card:nth-child(3n+3) { border-left-color: #fbbf24; } /* 金 */
+
+        .note-header { 
+            display: flex; 
+            align-items: center; 
+            margin-bottom: 0.8rem; 
+            color: var(--light-text); 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+        }
+        
+        .note-footer { 
+            margin-top: auto; 
+            font-size: 0.85rem; 
+            color: #9ca3af; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-top: 2px dotted #f3f4f6;
+            padding-top: 0.8rem;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 4rem 1.5rem;
+            text-align: center;
+            /* 頂部加入重複的菱形圖騰 */
+            background-image: 
+                linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.05)), 
+                linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.05) 75%, rgba(255,255,255,0.05));
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+        }
+        
+        .social-links a { 
+            font-size: 1.5rem; 
+            margin: 0 10px; 
+            color: #93c5fd; 
+            transition: color 0.3s; 
+        }
+        .social-links a:hover { color: var(--accent-color); }
+
+        /* RWD */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            #home h1 { font-size: 2.5rem; }
+            .about-container { grid-template-columns: 1fr; }
+            .hero-btn { clip-path: none; border-radius: 4px; padding: 1rem 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon-box">
+                    <i class="fa-solid fa-dove"></i>
+                </div>
+                <div class="logo-text">
+                    <span>線上玫瑰經祈禱</span>
+                    <small>每晚9點 LINE會議室</small>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#about">關於我們</a>
+                <a href="#info">聚會資訊</a>
+                <a href="#promote">加入善會</a>
+                <a href="#prayer-wall">代禱牆</a>
+                <a href="#info" class="cta-button-small">進入會議室</a>
+            </div>
+            <div class="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主視覺 -->
+    <section id="home">
+        <div class="subtitle">每晚 9 點．LINE 會議室</div>
+        <h1>線上<br>玫瑰經祈禱團體</h1>
+        <p>我們是一群玫瑰經善會的成員，每天晚上9點，<br>在雲端齊聚，用祈禱編織對上主的讚美。</p>
+        <a href="#info" class="hero-btn">加入今晚的祈禱</a>
+    </section>
+
+    <!-- 關於我們 -->
+    <section id="about">
+        <h2 class="section-title">關於祈禱群組<div class="totem-divider"></div></h2>
+        <div class="about-container">
+            <div class="about-text">
+                <h3><i class="fa-solid fa-users"></i> 雲端相聚．共融祈禱</h3>
+                <p>
+                    這個網頁是由一群熱愛信仰的平信徒所建立的線上家園。我們都是「玫瑰經善會」的成員，深感團體祈禱的力量，因此自發組成了這個線上祈禱群組。
+                </p>
+                <p>
+                    我們每天晚上 9 點在 <strong>LINE 會議室</strong> 連線。誠摯歡迎所有愛好玫瑰經的朋友加入。讓我們用最純樸的心，透過玫瑰經，將自己託付給天上慈母。
+                </p>
+            </div>
+            <div class="about-image">
+                <!-- 圖片來源：Unsplash 示意圖，帶有自然/群體感 -->
+                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="祈禱聚會氛圍">
+            </div>
+        </div>
+    </section>
+
+    <!-- 聚會資訊 -->
+    <section id="info">
+        <h2 class="section-title">聚會資訊<div class="totem-divider"></div></h2>
+        <div class="info-grid">
+            <div class="info-card">
+                <div class="info-icon"><i class="fa-regular fa-clock"></i></div>
+                <h3>祈禱時間</h3>
+                <p><strong>每天晚上</strong><br>21:00 - 21:40</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon"><i class="fa-brands fa-line"></i></div>
+                <h3>進行方式</h3>
+                <p><strong>LINE 會議室</strong><br>連結分享．一鍵加入</p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon"><i class="fa-solid fa-mountain-sun"></i></div>
+                <h3>參與對象</h3>
+                <p>歡迎所有人<br>不分教友與非教友</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="#" onclick="alert('連結已複製！請開啟 LINE 貼上給朋友。')" class="cta-button-small" style="font-size: 1.1rem; padding: 1rem 3rem; background-color: #06c755; border-color:#06c755;">
+                <i class="fa-brands fa-line"></i> 取得會議連結
+            </a>
+            <p style="margin-top:1rem; font-size: 0.9rem; color: #666;">(或加入我們的 LINE 群組)</p>
+        </div>
+    </section>
+
+    <!-- 推廣玫瑰經善會 -->
+    <section id="promote">
+        <h2 class="section-title">鼓勵加入玫瑰經善會<div class="totem-divider"></div></h2>
+        <div class="flyer-box">
+            <h3><i class="fa-solid fa-church"></i> 信仰的大家庭</h3>
+            <p class="flyer-text">
+                我們深刻體會到加入玫瑰經善會這個大家庭的美好。因此，除了邀請您參加我們的線上祈禱，也誠摯推薦您正式加入玫瑰經善會。
+            </p>
+            <p class="flyer-text">
+                透過每週誦念玫瑰經十五端奧蹟（歡喜、痛苦、榮福），讓我們的信德像編織一樣堅韌，在世界各地都有為您祈禱的兄弟姐妹。
+            </p>
+            <div class="organizer-info">
+                道明會中華聖母準會省<br>
+                玫瑰經推行人 葛維志 神父
+            </div>
+            <div style="margin-top: 2rem;">
+                <button onclick="alert('請聯繫我們索取報名表！')" class="cta-button-small" style="background-color: transparent; color: var(--primary-color) !important; border: 2px solid var(--primary-color);">
+                    <i class="fa-solid fa-file-pen"></i> 詢問報名方式
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 代禱牆 -->
+    <section id="prayer-wall">
+        <h2 class="section-title">代禱意向<div class="totem-divider"></div></h2>
+        <div style="text-align: center; margin-bottom: 2rem; color: #666;">
+            即使在不同地方，我們的心也相連。<br>請留下您的意向，我們將在 LINE 會議室中為您代禱。
+        </div>
+
+        <div class="prayer-input-area">
+            <div class="form-group" style="margin-bottom: 1rem;">
+                <label>您的稱呼</label>
+                <input type="text" id="nameInput" class="form-control" placeholder="主內弟兄/姊妹">
+            </div>
+            <div class="form-group">
+                <label>代禱內容</label>
+                <textarea id="contentInput" class="form-control" rows="3" placeholder="請為...祈禱"></textarea>
+            </div>
+            <button onclick="addNote()" class="submit-btn"><i class="fa-solid fa-paper-plane"></i> 張貼意向</button>
+        </div>
+
+        <div class="wall-grid" id="wallGrid"></div>
+    </section>
+
+    <footer>
+        <p style="font-size: 1.2rem; font-style: italic; margin-bottom: 2rem; font-family: 'Noto Serif TC', serif;">
+            「如果有人有幸加入玫瑰經善會，<br>他在世界各地都有為他祈禱的兄弟姐妹。」
+        </p>
+        <span style="display: block; margin-bottom: 3rem;">— 聖若翰・維雅納</span>
+        
+        <div style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem;">
+            <span style="font-weight:700; font-size: 1.2rem;">線上玫瑰經祈禱團體</span>
+            <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 1rem;">Online Rosary Prayer Group</p>
+            <div class="social-links">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-line"></i></a>
+                <a href="#"><i class="fa-regular fa-envelope"></i></a>
+            </div>
+            <p style="font-size: 0.8rem; margin-top: 2rem; opacity: 0.6;">© 2025 Online Rosary Group.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 代禱牆邏輯
+        const defaultNotes = [
+            { id: 1, name: "瑪利亞", content: "請為家中的長輩健康祈禱，最近天氣變化大。", time: "2小時前", likes: 5, liked: false },
+            { id: 2, name: "若瑟", content: "感謝天主，這週的工作順利完成了！", time: "昨天", likes: 12, liked: true },
+            { id: 3, name: "匿名", content: "請為在外地求學的學子祈禱，希望能常保信德。", time: "昨天", likes: 8, liked: false }
+        ];
+
+        let notes = JSON.parse(localStorage.getItem('prayerNotes')) || defaultNotes;
+
+        function renderNotes() {
+            const grid = document.getElementById('wallGrid');
+            grid.innerHTML = ''; 
+            notes.forEach(note => {
+                const card = document.createElement('div');
+                card.className = 'note-card';
+                card.innerHTML = `
+                    <div style="flex-grow: 1;">
+                        <div class="note-header">
+                            <i class="fa-solid fa-feather" style="margin-right:8px; color: var(--secondary-color);"></i> ${note.name}
+                        </div>
+                        <div class="note-content">${note.content}</div>
+                    </div>
+                    <div class="note-footer">
+                        <span>${note.time}</span>
+                        <button class="like-btn ${note.liked ? 'active' : ''}" onclick="toggleLike(${note.id})">
+                            <i class="${note.liked ? 'fa-solid' : 'fa-regular'} fa-heart"></i> ${note.likes}
+                        </button>
+                    </div>
+                `;
+                grid.prepend(card); 
+            });
+        }
+
+        function addNote() {
+            const nameInput = document.getElementById('nameInput');
+            const contentInput = document.getElementById('contentInput');
+            const name = nameInput.value.trim() || "主內弟兄/姊妹";
+            const content = contentInput.value.trim();
+
+            if (!content) { alert("請輸入代禱內容喔！"); return; }
+
+            const newNote = {
+                id: Date.now(),
+                name: name,
+                content: content,
+                time: "剛剛",
+                likes: 0,
+                liked: false
+            };
+            notes.push(newNote);
+            localStorage.setItem('prayerNotes', JSON.stringify(notes));
+            nameInput.value = '';
+            contentInput.value = '';
+            renderNotes();
+            document.getElementById('wallGrid').scrollIntoView({ behavior: 'smooth' });
+            alert("您的代禱意向已張貼！願主垂聽。");
+        }
+
+        function toggleLike(id) {
+            const note = notes.find(n => n.id === id);
+            if (note) {
+                note.liked = !note.liked;
+                note.likes += note.liked ? 1 : -1;
+                localStorage.setItem('prayerNotes', JSON.stringify(notes));
+                renderNotes();
+            }
+        }
+        renderNotes();
+    </script>
+</body>
+</html>
