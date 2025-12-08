@@ -23,10 +23,10 @@
             /* 強調色：小米黃 */
             --accent-color: #f59e0b; 
             
-            /* 背景色：米白 */
-            --bg-color: #fdfbf7;
-            /* 區塊背景：純白 */
-            --section-bg: #ffffff;
+            /* 背景色：暖米色 */
+            --bg-color: #f4ecd8;
+            /* 區塊背景：米白 */
+            --section-bg: #fffbf0;
             /* 邊框色 */
             --border-color: #e5e7eb;
             
@@ -55,8 +55,8 @@
             font-family: 'Noto Sans TC', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-            /* 背景加入極淡的粗布紋理 */
-            background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%231a1a1a' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            /* 背景紋理：模擬粗麻布或紙張質感 */
+            background-image: url("data:image/svg+xml,%3Csvg width='4' height='4' viewBox='0 0 4 4' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%238b7355' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
             line-height: 1.7;
             min-height: 100vh;
             display: flex;
@@ -73,12 +73,13 @@
 
         /* --- 導覽列 --- */
         header {
-            background-color: var(--white);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background-color: var(--section-bg);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         
         .header-top-bar {
@@ -89,8 +90,8 @@
                 var(--primary-color) 20px,
                 var(--secondary-color) 20px,
                 var(--secondary-color) 40px,
-                var(--white) 40px,
-                var(--white) 50px
+                var(--accent-color) 40px,
+                var(--accent-color) 50px
             );
         }
 
@@ -101,6 +102,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo {
@@ -125,19 +127,11 @@
         }
 
         .logo-icon-box i { font-size: 1.2rem; margin-top: 5px; color: var(--accent-color); }
-
         .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
         .logo small { font-size: 0.75rem; font-weight: 400; color: var(--light-text); }
 
         .nav-links { display: flex; gap: 2rem; align-items: center; }
-
-        .nav-links a {
-            font-weight: 600;
-            transition: color 0.3s;
-            color: var(--text-color);
-            position: relative;
-        }
-
+        .nav-links a { font-weight: 600; transition: color 0.3s; color: var(--text-color); position: relative; }
         .nav-links a:hover { color: var(--secondary-color); }
 
         .cta-button-small {
@@ -148,18 +142,9 @@
             transition: all 0.3s;
             clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%, 0% 20%);
         }
+        .cta-button-small:hover { background-color: var(--primary-color); color: var(--accent-color) !important; }
 
-        .cta-button-small:hover {
-            background-color: var(--primary-color);
-            color: var(--accent-color) !important;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--primary-color);
-        }
+        .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-color); }
 
         /* --- 頁面標題區塊 --- */
         .page-header {
@@ -182,7 +167,7 @@
             padding: 2rem 1.5rem;
             max-width: 1100px;
             margin: 0 auto;
-            flex-grow: 1; /* 讓內容區撐開，footer 保持在底部 */
+            flex-grow: 1; 
         }
 
         .wall-grid { 
@@ -204,81 +189,24 @@
             min-height: 180px;
         }
         
-        .note-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2); 
-        }
-        
+        .note-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2); }
         .note-card:nth-child(3n+1) { border-top-color: var(--primary-color); }
         .note-card:nth-child(3n+2) { border-top-color: var(--secondary-color); }
         .note-card:nth-child(3n+3) { border-top-color: var(--accent-color); }
         
-        .note-header { 
-            display: flex; 
-            align-items: center; 
-            margin-bottom: 1rem; 
-            color: var(--light-text); 
-            font-size: 0.95rem; 
-            font-weight: 600; 
-        }
-        
-        .note-content { 
-            font-size: 1.1rem; 
-            line-height: 1.6; 
-            color: #222; 
-            margin-bottom: 1rem; 
-            flex-grow: 1; 
-            white-space: pre-wrap; 
-        }
-        
-        .note-footer { 
-            margin-top: auto; 
-            font-size: 0.85rem; 
-            color: #777; 
-            border-top: 1px dashed #ddd; 
-            padding-top: 0.8rem; 
-            text-align: right; 
-        }
+        .note-header { display: flex; align-items: center; margin-bottom: 1rem; color: var(--light-text); font-size: 0.95rem; font-weight: 600; }
+        .note-content { font-size: 1.1rem; line-height: 1.6; color: #222; margin-bottom: 1rem; flex-grow: 1; white-space: pre-wrap; word-wrap: break-word; }
+        .note-footer { margin-top: auto; font-size: 0.85rem; color: #777; border-top: 1px dashed #ddd; padding-top: 0.8rem; text-align: right; }
 
-        /* --- 分頁導覽 (Pagination) --- */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 4rem;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
+        /* --- 分頁導覽 --- */
+        .pagination { display: flex; justify-content: center; align-items: center; margin-top: 4rem; gap: 10px; flex-wrap: wrap; }
         .page-btn {
-            background-color: var(--white);
-            border: 2px solid var(--primary-color);
-            color: var(--primary-color);
-            padding: 0.5rem 1rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-            min-width: 40px;
-            text-align: center;
+            background-color: var(--section-bg); border: 2px solid var(--primary-color); color: var(--primary-color);
+            padding: 0.5rem 1rem; cursor: pointer; font-weight: 600; transition: all 0.3s; min-width: 40px; text-align: center;
         }
-
-        .page-btn:hover:not(:disabled) {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
-
-        .page-btn.active {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-            color: var(--white);
-        }
-
-        .page-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            border-color: #ccc;
-            color: #ccc;
-        }
+        .page-btn:hover:not(:disabled) { background-color: var(--primary-color); color: var(--white); }
+        .page-btn.active { background-color: var(--secondary-color); border-color: var(--secondary-color); color: var(--white); }
+        .page-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #ccc; color: #ccc; }
 
         /* --- 漂浮按鈕 --- */
         .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 2000; }
@@ -301,12 +229,7 @@
         .social-links a:hover { color: var(--white); }
 
         @media (max-width: 768px) {
-            .nav-links { 
-                display: none; 
-                position: absolute; top: 100%; left: 0; width: 100%;
-                background-color: var(--white); flex-direction: column; padding: 1.5rem;
-                box-shadow: 0 10px 15px rgba(0,0,0,0.2); border-bottom: 5px solid var(--secondary-color);
-            }
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--section-bg); flex-direction: column; padding: 1.5rem; box-shadow: 0 10px 15px rgba(0,0,0,0.2); border-bottom: 5px solid var(--secondary-color); }
             .nav-links.active { display: flex; }
             .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
             .mobile-menu-btn { display: block; }
@@ -326,7 +249,6 @@
                     <small>每晚9點 LINE會議室</small>
                 </div>
             </div>
-            <!-- 注意：這裡的連結都改為 index.html#section，因為這是獨立分頁 -->
             <div class="nav-links">
                 <a href="index.html">回到首頁</a>
                 <a href="index.html#about">關於我們</a>
@@ -339,31 +261,21 @@
         </nav>
     </header>
 
-    <!-- 頁面標題 -->
     <section class="page-header">
         <h2 class="section-title">代禱意向總覽<div class="totem-divider"></div></h2>
-        <p style="color: #666; max-width: 600px; margin: 0 auto;">
-            在這裡，我們彼此代禱，分擔重擔。<br>願天主的平安與您同在。
-        </p>
+        <p style="color: #666; max-width: 600px; margin: 0 auto;">在這裡，我們彼此代禱，分擔重擔。<br>願天主的平安與您同在。</p>
     </section>
 
-    <!-- 代禱列表區塊 -->
     <div id="intercession-list">
         <div class="wall-grid" id="wallGrid">
             <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
                 <i class="fa-solid fa-spinner fa-spin"></i> 正在載入所有意向...
             </div>
         </div>
-
-        <!-- 分頁控制 -->
-        <div class="pagination" id="pagination">
-            <!-- 由 JS 生成 -->
-        </div>
+        <div class="pagination" id="pagination"></div>
     </div>
 
-    <!-- 漂浮填寫按鈕 -->
     <div class="fab-container">
-        <!-- 連結到 Google 表單 -->
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLN16UgWTei7_gYxX40iz0Vpkq7-OIrnTrd-8g6VqHR6mezg/viewform" target="_blank" class="fab-btn" title="填寫代禱意向">
             <i class="fa-solid fa-pen"></i>
         </a>
@@ -388,28 +300,21 @@
     </footer>
 
     <script>
-        // ==========================================
-        // 【設定區】請在此填入您的資料
-        // ==========================================
-        // 1. Google 試算表的「發佈到網路 CSV 連結」
-        // 務必與 index.html 使用同一個連結
-        const googleSheetCSVUrl = ''; 
-        // ==========================================
+        // 設定 Google Sheet CSV 連結 (務必填入)
+        const googleSheetCSVUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vR7cTN-8HxHM45F_KJDKz05otAhSv3mlZfzQt7V_iRh6SDjcA-qU69f6tHssYsWVxArqaA_vu1VWt8G/pub?output=csv'; 
 
         const itemsPerPage = 12;
         let allNotes = [];
         let currentPage = 1;
 
-        // 範例資料
         const demoNotes = Array.from({ length: 30 }, (_, i) => ({
             name: i % 3 === 0 ? "瑪利亞" : (i % 3 === 1 ? "若瑟" : "匿名"),
-            content: `這是第 ${i + 1} 則測試代禱意向。請為我們祈禱，求主賜予平安與喜樂。`,
+            content: `這是第 ${i + 1} 則測試代禱意向。\n請為我們祈禱，求主賜予平安與喜樂。`,
             time: "2025/01/01"
         }));
 
         async function init() {
             const grid = document.getElementById('wallGrid');
-            
             try {
                 if (googleSheetCSVUrl && googleSheetCSVUrl.length > 10) {
                     const response = await fetch(googleSheetCSVUrl);
@@ -424,9 +329,7 @@
                 allNotes = demoNotes;
             }
 
-            // 反轉陣列，讓最新的在最前面 (假設 CSV 是按時間順序 append)
             allNotes.reverse();
-
             renderPage(currentPage);
             renderPagination();
         }
@@ -447,9 +350,10 @@
             pageNotes.forEach(note => {
                 const card = document.createElement('div');
                 card.className = 'note-card';
-                const safeName = note.name || "主內弟兄/姊妹";
-                const safeContent = note.content || "";
-                const safeTime = note.time || "";
+                // XSS 防護
+                const safeName = (note.name || "主內弟兄/姊妹").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                const safeContent = (note.content || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                const safeTime = (note.time || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
                 card.innerHTML = `
                     <div class="note-header">
@@ -462,96 +366,84 @@
                 `;
                 grid.appendChild(card);
             });
-            
-            // 滾動到列表頂部
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function renderPagination() {
             const pagination = document.getElementById('pagination');
             pagination.innerHTML = '';
-
             const totalPages = Math.ceil(allNotes.length / itemsPerPage);
-
             if (totalPages <= 1) return;
 
-            // 上一頁按鈕
             const prevBtn = document.createElement('button');
             prevBtn.className = 'page-btn';
             prevBtn.innerHTML = '<i class="fa-solid fa-angle-left"></i>';
             prevBtn.disabled = currentPage === 1;
-            prevBtn.onclick = () => {
-                if (currentPage > 1) {
-                    currentPage--;
-                    updatePaginationState();
-                    renderPage(currentPage);
-                }
-            };
+            prevBtn.onclick = () => { if (currentPage > 1) { currentPage--; renderPagination(); renderPage(currentPage); } };
             pagination.appendChild(prevBtn);
 
-            // 頁碼按鈕 (簡單版：顯示所有頁碼，若頁數過多可再優化顯示邏輯)
             for (let i = 1; i <= totalPages; i++) {
                 const btn = document.createElement('button');
                 btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
                 btn.innerText = i;
-                btn.onclick = () => {
-                    currentPage = i;
-                    updatePaginationState();
-                    renderPage(currentPage);
-                };
+                btn.onclick = () => { currentPage = i; renderPagination(); renderPage(currentPage); };
                 pagination.appendChild(btn);
             }
 
-            // 下一頁按鈕
             const nextBtn = document.createElement('button');
             nextBtn.className = 'page-btn';
             nextBtn.innerHTML = '<i class="fa-solid fa-angle-right"></i>';
             nextBtn.disabled = currentPage === totalPages;
-            nextBtn.onclick = () => {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    updatePaginationState();
-                    renderPage(currentPage);
-                }
-            };
+            nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage++; renderPagination(); renderPage(currentPage); } };
             pagination.appendChild(nextBtn);
         }
 
-        function updatePaginationState() {
-            // 重新渲染分頁按鈕狀態 (active class)
-            renderPagination();
-        }
-
+        // 嚴謹的 CSV 解析器
         function parseCSV(text) {
-            const lines = text.split('\n');
-            const result = [];
-            for (let i = 1; i < lines.length; i++) {
-                if (!lines[i].trim()) continue;
-                const matches = lines[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
-                const row = matches || lines[i].split(',');
-                const cleanRow = row.map(cell => cell.replace(/^"|"$/g, '').replace(/""/g, '"'));
+            const arr = [];
+            let quote = false;  
+            let row = 0;        
+            let col = 0;        
+            let c = 0;          
 
-                if (cleanRow.length >= 2) { 
-                    result.push({
-                        time: cleanRow[0] ? cleanRow[0].split(' ')[0] : '', 
-                        name: cleanRow[1],
-                        content: cleanRow[2]
+            for (; c < text.length; c++) {
+                let cc = text[c];   
+                let nc = text[c+1]; 
+                
+                arr[row] = arr[row] || [];
+                arr[row][col] = arr[row][col] || '';
+        
+                if (cc == '"' && quote && nc == '"') { 
+                    arr[row][col] += cc; ++c; continue; 
+                }
+                if (cc == '"') { quote = !quote; continue; }
+                if (cc == ',' && !quote) { ++col; continue; }
+                if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+                if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+                if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+        
+                arr[row][col] += cc;
+            }
+
+            const result = [];
+            for (let i = 1; i < arr.length; i++) {
+                const rowData = arr[i];
+                if (rowData.length >= 3) {
+                     result.push({
+                        time: rowData[0] ? rowData[0].split(' ')[0] : '', 
+                        name: rowData[1],
+                        content: rowData[2]
                     });
                 }
             }
             return result;
         }
 
-        // 啟動
         init();
 
-        // Mobile Menu Toggle
         const mobileBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
-
-        mobileBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+        mobileBtn.addEventListener('click', () => { navLinks.classList.toggle('active'); });
     </script>
 </body>
 </html>
