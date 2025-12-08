@@ -116,6 +116,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative; /* 為了讓手機選單定位 */
         }
 
         .logo {
@@ -372,7 +373,28 @@
         .social-links a:hover { color: var(--white); }
 
         @media (max-width: 768px) {
-            .nav-links { display: none; }
+            .nav-links { 
+                display: none; 
+                /* 手機版選單樣式 */
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 1.5rem;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+                border-bottom: 5px solid var(--secondary-color);
+            }
+            .nav-links.active {
+                display: flex;
+            }
+            .nav-links a {
+                margin: 10px 0;
+                font-size: 1.1rem;
+                width: 100%;
+                text-align: center;
+            }
             .mobile-menu-btn { display: block; }
             #home h1 { font-size: 2.8rem; }
             .about-container { grid-template-columns: 1fr; }
@@ -491,7 +513,7 @@
     <div class="fab-container">
         <span class="fab-tooltip">填寫代禱意向</span>
         <!-- 【重要】請將 href 換成您的 Google 表單填寫連結 -->
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeyZIbGiSEA45Wba4tROJtBhEQcFPOhtqFO9CshBPNv0nv7Ew/viewform" target="_blank" class="fab-btn" id="fabBtn">
+        <a href="https://docs.google.com/forms" target="_blank" class="fab-btn" id="fabBtn">
             <i class="fa-solid fa-pen"></i>
         </a>
     </div>
@@ -614,6 +636,20 @@
         }
 
         fetchAndRenderNotes();
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
     </script>
 </body>
 </html>
