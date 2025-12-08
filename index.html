@@ -310,7 +310,7 @@
             </div>
             <div class="about-image">
                 <!-- 換成念珠與聖經的圖片，呼應傳單風格 -->
-                <img src="https://images.unsplash.com/photo-1595267794931-158a03290623?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="玫瑰經念珠特寫">
+                <img src="https://static.wixstatic.com/media/eb4a0a_ca202b34034347b7bf7bd7abb25b7697~mv2.png/v1/fill/w_322,h_362,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/%E7%8E%AB%E7%91%B0%E7%B6%93%E5%96%84%E6%9C%83.png" alt="玫瑰經念珠特寫">
             </div>
         </div>
     </section>
@@ -380,7 +380,7 @@
     
     <div class="fab-container">
         <span class="fab-tooltip">填寫代禱意向</span>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeyZIbGiSEA45Wba4tROJtBhEQcFPOhtqFO9CshBPNv0nv7Ew/viewform" target="_blank" class="fab-btn" id="fabBtn">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLN16UgWTei7_gYxX40iz0Vpkq7-OIrnTrd-8g6VqHR6mezg/viewform" target="_blank" class="fab-btn" id="fabBtn">
             <i class="fa-solid fa-pen"></i>
         </a>
     </div>
@@ -422,7 +422,10 @@
 
             try {
                 if (googleSheetCSVUrl && googleSheetCSVUrl.length > 10) {
-                    const response = await fetch(googleSheetCSVUrl);
+                    // Use a CORS proxy to avoid CORS errors when fetching from Google Sheets
+                    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(googleSheetCSVUrl);
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error('Network response was not ok');
                     const data = await response.text();
                     notes = parseCSV(data);
                 } else {
