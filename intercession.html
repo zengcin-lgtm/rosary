@@ -276,7 +276,7 @@
     </div>
 
     <div class="fab-container">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeyZIbGiSEA45Wba4tROJtBhEQcFPOhtqFO9CshBPNv0nv7Ew/viewform" target="_blank" class="fab-btn" title="填寫代禱意向">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLN16UgWTei7_gYxX40iz0Vpkq7-OIrnTrd-8g6VqHR6mezg/viewform" target="_blank" class="fab-btn" title="填寫代禱意向">
             <i class="fa-solid fa-pen"></i>
         </a>
     </div>
@@ -317,7 +317,10 @@
             const grid = document.getElementById('wallGrid');
             try {
                 if (googleSheetCSVUrl && googleSheetCSVUrl.length > 10) {
-                    const response = await fetch(googleSheetCSVUrl);
+                    // Use a CORS proxy to avoid CORS errors when fetching from Google Sheets
+                    const proxyUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(googleSheetCSVUrl);
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error('Network response was not ok');
                     const data = await response.text();
                     allNotes = parseCSV(data);
                 } else {
