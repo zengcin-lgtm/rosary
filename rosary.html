@@ -2,9 +2,20 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- 視口設定：禁止縮放，適配手機 App 模式 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>線上輔助唸珠 | 線上玫瑰經祈禱團體</title>
     
+    <!-- PWA / Web App 設定 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="線上唸珠">
+    <meta name="theme-color" content="#003366">
+    
+    <!-- App 圖示 (聖母藍底 + 白鴿) -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23003366'/%3E%3Cpath fill='%23ffffff' d='M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V240c0 8.8-7.2 16-16 16s-16-7.2-16-16V64c0-17.7-14.3-32-32-32s-32 14.3-32 32V336c0 1.5 .1 3.1 .4 4.5l5.6 30.6c2.7 14.8 17.1 24.3 31.9 21.6s24.3-17.1 21.6-31.9l-4.7-25.6c-1.3-7.3 4.3-14.1 11.7-14.1s13.3 6.2 12.6 13.6L200.7 403c-2.3 22.9 8.3 45.4 28.1 56.7L329 517c24.6 14.1 55.6 8.3 73.1-13.6l37.2-46.5c15.2-18.9 13.9-46.3-3-63.6l-57.8-59.2c-5.9-6-13.7-9.9-22-11.1l-68.5-9.8V32z' transform='translate(50, 50) scale(0.8)' /%3E%3Cpath fill='%23ffffff' d='M256 160c15 0 28.5 7.4 36.8 20.1C301.7 192.1 316.3 200 332.3 200h2.9c19.3 0 35.8-14.1 39.2-33.1l8.3-46.7c4.6-26.1-15.6-49.6-41.5-49.6h-3.6c-12.7 0-23.7-8.1-27.1-20.3-6.2-22.3-26.6-38.3-50.5-38.3H256c-28.7 0-52 23.3-52 52v44c0 28.7 23.3 52 52 52z'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='0' fill='%23003366'/%3E%3Cpath fill='%23ffffff' d='M256 160c15 0 28.5 7.4 36.8 20.1C301.7 192.1 316.3 200 332.3 200h2.9c19.3 0 35.8-14.1 39.2-33.1l8.3-46.7c4.6-26.1-15.6-49.6-41.5-49.6h-3.6c-12.7 0-23.7-8.1-27.1-20.3-6.2-22.3-26.6-38.3-50.5-38.3H256c-28.7 0-52 23.3-52 52v44c0 28.7 23.3 52 52 52z' transform='translate(-20, 20) scale(1.1)'/%3E%3C/svg%3E">
+
     <!-- 引入 Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,13 +49,14 @@
             background-position: 0 0, 10px 10px;
             background-attachment: fixed;
             line-height: 1.5;
-            /* 關鍵：全螢幕無捲動設定 */
             height: 100dvh; 
             overflow: hidden;
             display: flex;
             flex-direction: column;
             user-select: none;
             -webkit-user-select: none;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         h1, h2, h3, h4 {
@@ -55,7 +67,7 @@
 
         a { text-decoration: none; color: inherit; }
 
-        /* --- 導覽列 (同步 index.html) --- */
+        /* --- 導覽列 --- */
         header {
             background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -63,9 +75,10 @@
             position: fixed;
             width: 100%;
             top: 0;
+            padding-top: env(safe-area-inset-top);
             z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
-            height: 70px; /* 固定高度以便計算版面 */
+            height: calc(70px + env(safe-area-inset-top));
             display: flex;
             flex-direction: column;
         }
@@ -143,20 +156,20 @@
 
         .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-color); }
 
-        /* --- 主要內容區塊 (Flex 佈局) --- */
+        /* --- 主要內容區塊 --- */
         #rosary-app {
-            flex-grow: 1; /* 佔滿剩餘空間 */
-            margin-top: 70px; /* Header Height */
+            flex-grow: 1;
+            margin-top: calc(70px + env(safe-area-inset-top));
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-evenly; /* 平均分配垂直空間 */
+            justify-content: space-evenly;
             width: 100%;
             max-width: 800px;
             margin-left: auto;
             margin-right: auto;
             padding: 10px;
-            overflow: hidden; /* 防止內部溢出 */
+            overflow: hidden;
         }
 
         /* 奧蹟標題卡 */
@@ -179,82 +192,96 @@
             border-radius: 20px;
         }
 
-        /* 擬真念珠容器 */
+        /* --- 擬真念珠設計 --- */
         .beads-container {
             position: relative;
-            /* 使用 vmin 確保在任何方向都不會超出螢幕 */
-            width: 40vmin; 
-            height: 40vmin;
-            max-width: 320px;
-            max-height: 320px;
+            width: 45vmin; /* 稍微放大 */
+            height: 45vmin;
+            max-width: 350px;
+            max-height: 350px;
             margin: 10px 0;
             border-radius: 50%;
-            /* 金屬鍊條效果 */
-            border: 1px dashed #aaa; 
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+            /* 移除原本的 border，改用 svg 鍊條 */
         }
         
-        /* 鍊條 SVG 背景 */
         .chain-svg {
             position: absolute;
             top: -5%; left: -5%;
             width: 110%; height: 110%;
             pointer-events: none;
-            opacity: 0.4;
+            opacity: 0.8;
         }
 
-        /* 珠子樣式 (擬真) */
+        /* 珠子通用樣式 - 擬真優化 */
         .bead {
             position: absolute;
-            width: 22px;
-            height: 22px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             transform: translate(-50%, -50%);
             transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            
-            /* 擬真材質：聖母藍寶石質感 */
-            background: radial-gradient(circle at 30% 30%, #aaddff, #4A90E2, #003366);
-            box-shadow: 2px 2px 4px rgba(0,0,0,0.3), inset -2px -2px 4px rgba(0,0,0,0.2);
             z-index: 2;
+            /* 青金石質感 (Lapis Lazuli) */
+            background: radial-gradient(circle at 35% 35%, 
+                rgba(255, 255, 255, 0.9) 0%, 
+                rgba(74, 144, 226, 0.8) 20%, 
+                rgba(0, 51, 102, 1) 80%, 
+                rgba(0, 20, 40, 1) 100%);
+            box-shadow: 
+                inset -2px -2px 6px rgba(0,0,0,0.4),
+                2px 3px 5px rgba(0,0,0,0.3);
         }
 
-        /* 特殊珠 (大珠/十字架) */
+        /* 大珠 (Our Father) - 黃銅/金珠質感 */
         .bead[data-type="large"] {
-            width: 28px;
-            height: 28px;
-            background: radial-gradient(circle at 30% 30%, #fffbe6, #D4AF37, #b8860b); /* 金色 */
+            width: 32px;
+            height: 32px;
+            background: radial-gradient(circle at 30% 30%, #fffbe6, #D4AF37, #b8860b);
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 
+                inset -2px -2px 6px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(184, 134, 11, 0.3),
+                3px 4px 8px rgba(0,0,0,0.4);
         }
         
+        /* 十字架 - 銀色金屬質感 */
         .bead[data-type="cross"] {
-            width: 30px; height: 36px;
-            border-radius: 4px;
-            background: radial-gradient(circle at 30% 30%, #ddd, #999); /* 銀色 */
-            clip-path: polygon(20% 0%, 80% 0%, 80% 20%, 100% 20%, 100% 45%, 80% 45%, 80% 100%, 20% 100%, 20% 45%, 0% 45%, 0% 20%, 20% 20%);
+            width: 32px; height: 44px;
+            border-radius: 2px;
+            /* 金屬光澤 */
+            background: linear-gradient(135deg, #f5f5f5 0%, #dcdcdc 50%, #999 100%);
+            /* 使用 clip-path 切割出十字架形狀 */
+            clip-path: polygon(35% 0%, 65% 0%, 65% 30%, 100% 30%, 100% 50%, 65% 50%, 65% 100%, 35% 100%, 35% 50%, 0% 50%, 0% 30%, 35% 30%);
+            box-shadow: none;
+            filter: drop-shadow(2px 3px 3px rgba(0,0,0,0.5));
         }
 
-        /* 激活狀態 (發光 + 放大) */
+        /* 激活狀態 (發光) */
         .bead.active {
-            transform: translate(-50%, -50%) scale(1.5);
-            box-shadow: 0 0 15px var(--accent-color), 0 0 30px var(--secondary-color);
-            z-index: 10;
+            transform: translate(-50%, -50%) scale(1.4);
+            box-shadow: 
+                0 0 15px var(--accent-color), 
+                0 0 30px var(--secondary-color),
+                inset -2px -2px 6px rgba(0,0,0,0.4);
             filter: brightness(1.2);
+            z-index: 100;
         }
         
-        /* 中心裝飾 (聖母牌) */
+        /* 中心聖母牌 */
         .center-medal {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px; height: 80px;
-            background: radial-gradient(ellipse at center, #fff, #f0f0f0);
-            border: 2px solid var(--accent-color);
+            width: 60px; height: 75px; /* 橢圓 */
+            background: radial-gradient(ellipse at center, #fff, #e0e0e0);
+            border: 3px solid var(--accent-color);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            color: var(--secondary-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.1);
             z-index: 1;
         }
 
@@ -273,11 +300,10 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            /* 讓卡片高度稍微固定，避免跳動，但不過高 */
             min-height: 25vh; 
             max-height: 35vh;
-            flex-shrink: 1; /* 允許在小螢幕縮小 */
-            overflow-y: auto; /* 文字過多時可捲動內容 */
+            flex-shrink: 1;
+            overflow-y: auto;
         }
         
         .prayer-display:active {
@@ -301,7 +327,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            white-space: pre-wrap; /* 保留換行 */
+            white-space: pre-wrap;
+            transition: font-size 0.2s;
         }
 
         .progress-indicator {
@@ -322,50 +349,58 @@
             flex-shrink: 0;
         }
 
-        /* 控制按鈕列 */
+        .font-controls {
+            position: absolute;
+            top: 10px; right: 10px;
+            display: flex; gap: 5px;
+            z-index: 20;
+        }
+        
+        .font-btn {
+            background-color: rgba(0,0,0,0.05);
+            border: none; width: 30px; height: 30px; border-radius: 50%;
+            color: var(--primary-color); font-weight: bold; font-size: 0.9rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .font-btn:hover { background-color: var(--secondary-color); color: white; }
+
         .controls {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 10px;
-            flex-shrink: 0;
+            display: flex; gap: 20px; margin-bottom: 10px; flex-shrink: 0;
         }
 
         .control-btn {
             background-color: var(--white);
             border: 1px solid var(--primary-color);
             color: var(--primary-color);
-            width: 40px; height: 40px;
-            border-radius: 50%;
+            width: 40px; height: 40px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.2s;
+            font-size: 1rem; cursor: pointer; transition: all 0.2s;
         }
-        
-        .control-btn:active {
-            background-color: var(--primary-color);
-            color: var(--white);
-        }
+        .control-btn:active { background-color: var(--primary-color); color: var(--white); }
 
-        /* --- Footer (極簡版，配合無捲動) --- */
-        footer {
-            background-color: var(--primary-color); 
-            color: var(--white); 
-            padding: 0.5rem; 
-            text-align: center;
-            border-top: 4px solid var(--accent-color);
-            font-size: 0.75rem;
-            flex-shrink: 0;
-            height: auto;
+        .toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.7); color: white;
+            padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;
+            opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 2000;
         }
-        
+        .toast.show { opacity: 1; }
+
+        footer {
+            background-color: var(--primary-color); color: var(--white); 
+            padding: 0.5rem; text-align: center;
+            border-top: 4px solid var(--accent-color);
+            font-size: 0.75rem; flex-shrink: 0; height: auto;
+            padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+        }
         footer p { margin: 2px 0; opacity: 0.8; }
-        .social-links { display: none; } /* 空間不足時隱藏社交連結 */
+        .social-links { display: none; }
 
         @media (min-height: 800px) {
             .social-links { display: block; margin: 5px 0; }
             .social-links a { margin: 0 5px; color: var(--accent-color); font-size: 1rem; }
-            footer { padding: 1rem; }
+            footer { padding: 1rem; padding-bottom: calc(1rem + env(safe-area-inset-bottom)); }
         }
 
         @media (max-width: 768px) {
@@ -374,8 +409,7 @@
             .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
             .mobile-menu-btn { display: block; }
             
-            /* 手機版調整 */
-            .beads-container { width: 45vmin; height: 45vmin; }
+            .beads-container { width: 50vmin; height: 50vmin; } /* 手機上稍微放大 */
             .prayer-display { width: 90%; min-height: 20vh; }
             .prayer-text { font-size: 1rem; }
         }
@@ -407,7 +441,6 @@
 
     <div id="rosary-app">
         
-        <!-- 奧蹟顯示 -->
         <div class="mystery-header">
             <h2 id="current-mystery-title">準備祈禱</h2>
             <p id="current-mystery-desc">請懷著虔敬的心</p>
@@ -415,12 +448,14 @@
 
         <!-- 珠子視覺化 -->
         <div class="beads-container" id="beads-ring">
-            <!-- 鍊條裝飾 -->
+            <!-- 鍊條 SVG -->
             <svg class="chain-svg" viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="48" fill="none" stroke="#ccc" stroke-width="1" stroke-dasharray="2,2" />
+                <!-- 陰影層 -->
+                <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(0,0,0,0.15)" stroke-width="2" />
+                <!-- 金屬鍊條層 -->
+                <circle cx="50" cy="50" r="48" fill="none" stroke="#B0B0B0" stroke-width="1.5" stroke-dasharray="0.5, 2.5" stroke-linecap="round" />
             </svg>
             
-            <!-- 中心聖母牌 -->
             <div class="center-medal">
                 <i class="fa-solid fa-hands-praying"></i>
             </div>
@@ -428,21 +463,26 @@
             <!-- 珠子由 JS 動態生成 -->
         </div>
 
-        <!-- 經文卡片 (點擊區域) -->
         <div class="prayer-display" id="prayer-card" onclick="nextBead()">
+            <div class="font-controls" onclick="event.stopPropagation()">
+                <button class="font-btn" onclick="adjustFontSize(-1)" title="縮小字體"><i class="fa-solid fa-minus"></i></button>
+                <button class="font-btn" onclick="adjustFontSize(1)" title="放大字體"><i class="fa-solid fa-plus"></i></button>
+            </div>
+
             <div class="prayer-title" id="prayer-name">聖號經</div>
             <div class="prayer-text" id="prayer-content">因父、及子、及聖神之名。<br>阿們。</div>
             <div class="progress-indicator" id="progress-text">開始</div>
             <div class="tap-hint"><i class="fa-solid fa-hand-pointer"></i> 點擊卡片撥動下一顆</div>
         </div>
 
-        <!-- 控制按鈕 -->
         <div class="controls">
             <button class="control-btn" onclick="prevBead()" title="上一顆"><i class="fa-solid fa-arrow-left"></i></button>
             <button class="control-btn" onclick="resetRosary()" title="重新開始"><i class="fa-solid fa-rotate-left"></i></button>
         </div>
 
     </div>
+
+    <div id="toast" class="toast">已恢復上次進度</div>
 
     <footer>
         <div class="social-links">
@@ -453,7 +493,6 @@
     </footer>
 
     <script>
-        // --- 1. 定義經文內容 ---
         const prayers = {
             signOfCross: { title: "聖號經", content: "因父、及子、及聖神之名。阿們。" },
             creed: { title: "信經", content: "我信全能的天主父，天地萬物的創造者。我信父的唯一子，我們的主耶穌基督..." },
@@ -464,7 +503,6 @@
             hailHolyQueen: { title: "又聖母經", content: "萬福母后！仁慈的母親，我們的生命，我們的甘飴，我們的希望..." }
         };
 
-        // --- 2. 定義奧蹟內容 ---
         const mysteries = {
             joyful: [
                 { title: "歡喜一端", desc: "天使向聖母瑪利亞報喜" },
@@ -499,6 +537,7 @@
         let rosarySequence = [];
         let currentIndex = 0;
         let todayMysteries = [];
+        let currentFontSize = 1.05;
 
         function initMystery() {
             const day = new Date().getDay();
@@ -510,93 +549,46 @@
 
         function buildSequence() {
             rosarySequence = [];
-            
-            // --- 準備階段 (前導) ---
-            // 1. 十字架: 聖號經 + 信經 (位置 0 點鐘)
             rosarySequence.push({ key: 'signOfCross', step: '開始', beadId: 'bead-cross', mysteryIdx: -1 });
             rosarySequence.push({ key: 'creed', step: '信經', beadId: 'bead-cross', mysteryIdx: -1 });
-            
-            // 2. 大珠: 天主經
             rosarySequence.push({ key: 'ourFather', step: '為教宗祈禱', beadId: 'bead-start-large', mysteryIdx: -1 });
-            
-            // 3. 小珠 x3: 聖母經 (信望愛)
             for(let i=1; i<=3; i++) {
                 rosarySequence.push({ key: 'hailMary', step: `信望愛 ${i}/3`, beadId: `bead-start-${i}`, mysteryIdx: -1 });
             }
-            
-            // 4. 光榮經
             rosarySequence.push({ key: 'gloryBe', step: '光榮經', beadId: 'bead-gap', mysteryIdx: -1 });
 
-            // --- 五端奧蹟循環 ---
             for (let m = 0; m < 5; m++) {
                 const mNum = ["一", "二", "三", "四", "五"][m];
-                
-                // 宣讀奧蹟 + 天主經 (大珠)
-                rosarySequence.push({ 
-                    key: 'mystery', 
-                    mysteryIdx: m, 
-                    step: `第${mNum}端奧蹟`, 
-                    beadId: 'bead-large', // 圓環上的大珠
-                    isLarge: true
-                });
+                rosarySequence.push({ key: 'mystery', mysteryIdx: m, step: `第${mNum}端奧蹟`, beadId: 'bead-large', isLarge: true });
                 rosarySequence.push({ key: 'ourFather', step: `第${mNum}端`, beadId: 'bead-large', mysteryIdx: m, isLarge: true });
-
-                // 聖母經 x10 (圓環上的10顆小珠)
                 for(let i=1; i<=10; i++) {
-                    rosarySequence.push({ 
-                        key: 'hailMary', 
-                        step: `聖母經 ${i}/10`, 
-                        beadId: `bead-${i}`, // 對應圓環上的ID
-                        mysteryIdx: m 
-                    });
+                    rosarySequence.push({ key: 'hailMary', step: `聖母經 ${i}/10`, beadId: `bead-${i}`, mysteryIdx: m });
                 }
-
-                // 結束該端
                 rosarySequence.push({ key: 'gloryBe', step: `第${mNum}端結束`, beadId: 'bead-gap', mysteryIdx: m });
                 rosarySequence.push({ key: 'fatima', step: '法蒂瑪禱詞', beadId: 'bead-gap', mysteryIdx: m });
             }
             
-            // --- 結束階段 ---
             rosarySequence.push({ key: 'hailHolyQueen', step: '結束禱詞', beadId: 'center-medal', mysteryIdx: -1 });
             rosarySequence.push({ key: 'signOfCross', step: '禮成', beadId: 'bead-cross', mysteryIdx: -1 });
         }
 
-        // --- 渲染珠子 (視覺佈局) ---
         function renderBeads() {
             const container = document.getElementById('beads-ring');
-            // 清除除了靜態元素外的動態珠子
             const existingBeads = container.querySelectorAll('.bead');
             existingBeads.forEach(b => b.remove());
             
-            const radius = 48; // 半徑百分比 (0-50)
-            
-            // 1. 渲染一端 (10顆小珠 + 1顆大珠) 形成圓環
-            // 為了視覺好看，我們把 10 顆小珠均勻分布，大珠放在頂部
-            // 總共 11 個位置
+            const radius = 48;
             const total = 11;
             
-            // 生成 10 顆小珠
             for (let i = 1; i <= 10; i++) {
-                // 調整角度，讓大珠在正上方 (-90度)，小珠從右邊開始順時針
-                // 0度在右邊。大珠在 270度 (-90)。
-                // 分割 360 度
-                // 我們讓大珠在 top, 小珠分布在圓周
                 const angleDeg = -90 + (i * (360 / total));
                 createBead(container, radius, angleDeg, `bead-${i}`, 'small');
             }
-            
-            // 生成 1 顆大珠 (在正上方)
             createBead(container, radius, -90, 'bead-large', 'large');
-            
-            // 生成 "開始" 用的垂飾部分 (視覺上放在圓環下方或中間)
-            // 這裡為了簡化，且因空間限制，我們只在邏輯上切換，視覺上可複用位置
-            // 或者在圓環內部下方加幾顆小珠代表前導
             createBead(container, 25, 90, 'bead-start-1', 'small');
             createBead(container, 15, 90, 'bead-start-2', 'small');
             createBead(container, 5, 90, 'bead-start-3', 'small');
-            
-            // 十字架 (另外處理，不放在圓環軌道上，而是絕對定位)
-            // 已經在 CSS 中定義 bead[data-type="cross"]
+            createBead(container, 50, 180, 'bead-cross', 'cross'); // 十字架位置修正
         }
         
         function createBead(container, rPercent, angleDeg, id, type) {
@@ -605,15 +597,54 @@
             bead.id = id;
             bead.dataset.type = type;
             
-            const x = 50 + rPercent * Math.cos(angleDeg * Math.PI / 180);
-            const y = 50 + rPercent * Math.sin(angleDeg * Math.PI / 180);
-            
-            bead.style.left = `${x}%`;
-            bead.style.top = `${y}%`;
+            if (type === 'cross') {
+                // 十字架位置特殊處理，垂掛在正下方
+                bead.style.left = '50%';
+                bead.style.top = '105%'; // 稍微超出圓環下方
+            } else {
+                const x = 50 + rPercent * Math.cos(angleDeg * Math.PI / 180);
+                const y = 50 + rPercent * Math.sin(angleDeg * Math.PI / 180);
+                bead.style.left = `${x}%`;
+                bead.style.top = `${y}%`;
+            }
             container.appendChild(bead);
         }
 
-        // --- 互動控制 ---
+        function adjustFontSize(delta) {
+            currentFontSize += (delta * 0.1);
+            if (currentFontSize < 0.8) currentFontSize = 0.8;
+            if (currentFontSize > 1.8) currentFontSize = 1.8;
+            document.getElementById('prayer-content').style.fontSize = `${currentFontSize}rem`;
+        }
+
+        function saveProgress() {
+            localStorage.setItem('rosaryProgressIndex', currentIndex);
+            localStorage.setItem('rosaryLastDate', new Date().toDateString());
+        }
+
+        function loadProgress() {
+            const savedIndex = localStorage.getItem('rosaryProgressIndex');
+            const savedDate = localStorage.getItem('rosaryLastDate');
+            const today = new Date().toDateString();
+
+            if (savedIndex && savedDate === today) {
+                currentIndex = parseInt(savedIndex);
+                if (currentIndex > 0) {
+                    showToast("已恢復上次進度");
+                }
+            } else {
+                currentIndex = 0;
+                localStorage.removeItem('rosaryProgressIndex');
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
+        }
+
         function updateDisplay() {
             const currentStep = rosarySequence[currentIndex];
             const titleEl = document.getElementById('prayer-name');
@@ -622,7 +653,6 @@
             const mysteryTitle = document.getElementById('current-mystery-title');
             const mysteryDesc = document.getElementById('current-mystery-desc');
             
-            // 更新奧蹟標題
             if (currentStep.mysteryIdx !== undefined && currentStep.mysteryIdx >= 0) {
                 const currentM = todayMysteries[currentStep.mysteryIdx]; 
                 mysteryTitle.innerText = currentM.title;
@@ -635,7 +665,6 @@
                 mysteryDesc.innerText = "感謝天主垂聽";
             }
 
-            // 更新經文
             if (currentStep.key === 'mystery') {
                 const currentM = todayMysteries[currentStep.mysteryIdx];
                 titleEl.innerText = currentM.title;
@@ -647,16 +676,10 @@
             
             progressEl.innerText = currentStep.step;
 
-            // 更新珠子視覺
             document.querySelectorAll('.bead').forEach(b => b.classList.remove('active'));
-            
             if (currentStep.beadId) {
                 const targetBead = document.getElementById(currentStep.beadId);
-                if (targetBead) {
-                    targetBead.classList.add('active');
-                } else if (currentStep.beadId === 'bead-cross') {
-                    // 如果是十字架，可以讓中心圖標發光，或暫時忽略
-                }
+                if (targetBead) targetBead.classList.add('active');
             }
         }
 
@@ -664,11 +687,13 @@
             if (currentIndex < rosarySequence.length - 1) {
                 currentIndex++;
                 updateDisplay();
+                saveProgress();
                 if (navigator.vibrate) navigator.vibrate(10); 
             } else {
                 alert("祈禱結束，感謝天主！");
                 currentIndex = 0;
                 updateDisplay();
+                saveProgress();
             }
         }
 
@@ -676,6 +701,7 @@
             if (currentIndex > 0) {
                 currentIndex--;
                 updateDisplay();
+                saveProgress();
             }
         }
 
@@ -683,16 +709,17 @@
             if(confirm("確定要重新開始嗎？")) {
                 currentIndex = 0;
                 updateDisplay();
+                saveProgress();
             }
         }
 
         window.onload = function() {
             initMystery();
             buildSequence();
+            loadProgress();
             renderBeads();
             updateDisplay();
             
-            // 漢堡選單邏輯
             const mobileBtn = document.querySelector('.mobile-menu-btn');
             const navLinks = document.querySelector('.nav-links');
             if(mobileBtn) {
