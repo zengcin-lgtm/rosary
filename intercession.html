@@ -2,9 +2,23 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 視口設定：禁止縮放，適配手機 App 模式 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>所有代禱意向 | 線上玫瑰經祈禱團體</title>
     
+    <!-- PWA / Web App 設定 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="代禱意向">
+    <meta name="theme-color" content="#003366">
+    
+    <!-- App 圖示：直接連結到 images/icon.png -->
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="apple-touch-icon" href="images/icon.png">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuWtpOS4iuW1teePoCIsCiAgInNob3J0X25hbWUiOiAi5a2k5LiK5bW154+gIiwKICAic3RhcnRfdXJsIjogImludGVyY2Vzc2lvbi5odG1sIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjRjVGN0ZBIiwKICAidGhlbWVfY29xvciI6ICIjMDAzMzY2IiwKICAiaWNvbnMiOiBbewogICAgInNyYyI6ICJpbWFnZXMvaWNvbi5wbmciLAogICAgInNpemVzIjogIjUxMng1MTIiLAogICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogIH1dCn0=">
+
     <!-- 引入 Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,6 +78,9 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            /* PWA 適配 */
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         h1, h2, h3, h4 {
@@ -82,13 +99,18 @@
             position: fixed;
             width: 100%;
             top: 0;
+            padding-top: env(safe-area-inset-top);
             z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
+            height: calc(70px + env(safe-area-inset-top)); /* 自動增加高度 */
+            display: flex;
+            flex-direction: column;
         }
         
         /* 頂部編織條 */
         .header-top-bar {
             height: 6px;
+            flex-shrink: 0;
             background: repeating-linear-gradient(
                 90deg,
                 var(--primary-color),
@@ -104,12 +126,13 @@
 
         nav {
             max-width: 1100px;
+            width: 100%;
             margin: 0 auto;
-            padding: 1rem 1.5rem;
+            padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
+            height: 100%;
         }
 
         .logo {
@@ -161,7 +184,7 @@
 
         /* --- 頁面標題區塊 --- */
         .page-header {
-            padding-top: 120px;
+            padding-top: calc(120px + env(safe-area-inset-top)); /* 適配 PWA 頂部 padding */
             padding-bottom: 2rem;
             text-align: center;
             background-color: transparent;
@@ -229,7 +252,7 @@
         .page-btn:disabled { opacity: 0.5; cursor: not-allowed; border-color: #eee; color: #ccc; }
 
         /* --- 漂浮按鈕 --- */
-        .fab-container { position: fixed; bottom: 30px; right: 30px; z-index: 2000; }
+        .fab-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom)); right: 30px; z-index: 2000; }
         .fab-btn {
             width: 60px; height: 60px; 
             background-color: var(--secondary-color); color: var(--white); 
@@ -249,6 +272,8 @@
             border-top: 8px solid var(--accent-color);
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
             margin-top: auto;
+            /* 適配 PWA 底部 */
+            padding-bottom: calc(4rem + env(safe-area-inset-bottom));
         }
         .social-links a { font-size: 1.5rem; margin: 0 10px; color: var(--accent-color); transition: color 0.3s; }
         .social-links a:hover { color: var(--white); }
@@ -258,7 +283,7 @@
             .nav-links.active { display: flex; }
             .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
             .mobile-menu-btn { display: block; }
-            .fab-container { bottom: 20px; right: 20px; }
+            .fab-container { bottom: calc(20px + env(safe-area-inset-bottom)); right: 20px; }
         }
     </style>
 </head>
@@ -279,7 +304,7 @@
                 <a href="index.html#about">關於我們</a>
                 <a href="index.html#info">聚會資訊</a>
                 <a href="index.html#promote">加入善會</a>
-                <a href="rosary.html"><i class="fa-solid fa-xs fa-bullseye"></i> 線上唸珠</a>
+                <a href="rosary.html">線上唸珠</a>
                 <a href="intercession.html" style="color: var(--secondary-color);">代禱牆</a>
                 <a href="https://line.me/R/meeting/6e1105b1919945ddad5390853d75be5d" target="_blank" class="cta-button-small">進入會議室</a>
             </div>
