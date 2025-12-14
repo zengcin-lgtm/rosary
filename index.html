@@ -238,6 +238,36 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- 倒數計時器與按鈕區塊 --- */
+        .cta-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #countdown-timer {
+            font-family: 'Noto Sans TC', sans-serif;
+            color: var(--white);
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+        
+        #countdown-timer span {
+            color: var(--accent-color);
+            font-weight: 700;
+            font-family: monospace;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+        }
+
         .hero-btn {
             background-color: var(--accent-color); 
             color: var(--primary-color); 
@@ -248,11 +278,28 @@
             transition: all 0.3s;
             border-radius: 4px;
             border-bottom: 4px solid #b8962e;
+            text-align: center;
+            min-width: 280px;
         }
         .hero-btn:hover { 
             transform: translateY(-5px); 
             background-color: #ffe066; 
             box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+        }
+
+        /* 祈禱進行中的按鈕特效 (Live) */
+        .live-btn {
+            background-color: #dc2626 !important; /* 紅色 */
+            border-color: #991b1b !important;
+            color: white !important;
+            animation: pulse-live 2s infinite;
+            border-bottom: 4px solid #991b1b;
+        }
+
+        @keyframes pulse-live {
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); transform: scale(1); }
+            70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); transform: scale(1.05); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); transform: scale(1); }
         }
 
         /* --- 關於我們 --- */
@@ -417,14 +464,21 @@
         <div class="subtitle">每晚 9 點．LINE 會議室</div>
         <h1>線上<br>玫瑰經祈禱團體</h1>
         
-        <!-- 新增：今日奧蹟卡片 -->
+        <!-- 今日奧蹟卡片 -->
         <div id="daily-mystery-card" class="mystery-badge">
             <i id="mystery-icon" class="fa-solid fa-star"></i>
             <span>今日默想：<span id="mystery-text">載入中...</span></span>
         </div>
 
         <p>我們是一群玫瑰經善會的成員，每天晚上9點，<br>在雲端齊聚，用祈禱編織對上主的讚美。</p>
-        <a href="#info" class="hero-btn">加入今晚的祈禱</a>
+        
+        <!-- 新增：倒數計時器與按鈕包裹區 -->
+        <div class="cta-wrapper">
+            <div id="countdown-timer">
+                <i class="fa-solid fa-hourglass-half"></i> 距離祈禱還有 <span id="timer-display">--:--:--</span>
+            </div>
+            <a href="#info" class="hero-btn" id="hero-cta-btn">加入今晚的祈禱</a>
+        </div>
     </section>
 
     <section id="about">
@@ -648,7 +702,7 @@
             }
         }
 
-        // --- 新增功能：自動判斷今日玫瑰經奧蹟 ---
+        // --- 自動判斷今日玫瑰經奧蹟 ---
         function setDailyMystery() {
             const today = new Date().getDay(); // 0 = 週日, 1 = 週一, ...
             const mysteryText = document.getElementById('mystery-text');
@@ -685,6 +739,65 @@
                 mysteryIcon.className = `fa-solid ${iconClass}`;
             }
         }
+
+        // --- 新增：祈禱倒數計時器 Logic ---
+        function updateCountdown() {
+            const now = new Date();
+            const timerDisplay = document.getElementById('timer-display');
+            const countdownContainer = document.getElementById('countdown-timer');
+            const heroBtn = document.getElementById('hero-cta-btn');
+            
+            // 設定目標時間：今天的 21:00
+            let target = new Date();
+            target.setHours(21, 0, 0, 0);
+            
+            // 設定結束時間：今天的 21:40
+            let endTime = new Date();
+            endTime.setHours(21, 40, 0, 0);
+
+            // 狀態判斷
+            if (now >= target && now < endTime) {
+                // 正在祈禱中 (21:00 - 21:40)
+                countdownContainer.innerHTML = '<i class="fa-solid fa-podcast" style="color:#ef4444;"></i> <span style="color:#fff; background:none;">祈禱正在進行中</span>';
+                heroBtn.classList.add('live-btn');
+                heroBtn.innerHTML = '<i class="fa-solid fa-video"></i> 立即進入會議室';
+                // 這裡可以直接改連結到會議室，或者維持連到 #info
+                // heroBtn.href = "https://line.me/R/meeting/..."; 
+            } else {
+                // 非祈禱時間，計算倒數
+                heroBtn.classList.remove('live-btn');
+                heroBtn.innerHTML = "加入今晚的祈禱";
+                
+                // 如果已經過了今天的 21:40，目標設為明天的 21:00
+                if (now >= endTime) {
+                    target.setDate(target.getDate() + 1);
+                }
+
+                const diff = target - now;
+                
+                // 計算時分秒
+                const h = Math.floor(diff / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+                // 補零
+                const hh = h.toString().padStart(2, '0');
+                const mm = m.toString().padStart(2, '0');
+                const ss = s.toString().padStart(2, '0');
+
+                // 更新顯示
+                // 為了避免每次都重寫 innerHTML 導致閃爍，只在非進行中狀態更新文字
+                if (!countdownContainer.innerHTML.includes("距離祈禱還有")) {
+                     countdownContainer.innerHTML = '<i class="fa-solid fa-hourglass-half"></i> 距離祈禱還有 <span id="timer-display"></span>';
+                }
+                const displaySpan = document.getElementById('timer-display');
+                if (displaySpan) displaySpan.innerText = `${hh}:${mm}:${ss}`;
+            }
+        }
+
+        // 每秒更新
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // 初次執行
 
         // 初始化
         setDailyMystery();
