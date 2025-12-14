@@ -173,8 +173,9 @@
             margin-bottom: 2rem;
             width: 90%;
             text-align: center;
+            transition: all 0.3s;
         }
-        .mystery-header h2 { font-size: 1.4rem; margin-bottom: 5px; }
+        .mystery-header h2 { font-size: 1.4rem; margin-bottom: 5px; color: var(--primary-color); }
         .mystery-header p { color: var(--light-text); font-size: 0.9rem; }
 
         /* 珠子視覺化 (圓形排列) */
@@ -365,8 +366,8 @@
         
         <!-- 奧蹟顯示 -->
         <div class="mystery-header">
-            <h2 id="current-mystery-title">歡喜一端</h2>
-            <p id="current-mystery-desc">天使向聖母瑪利亞報喜</p>
+            <h2 id="current-mystery-title">準備祈禱</h2>
+            <p id="current-mystery-desc">請懷著虔敬的心</p>
         </div>
 
         <!-- 珠子視覺化 -->
@@ -442,8 +443,7 @@
         };
 
         // --- 3. 唸珠流程邏輯 (Sequence Logic) ---
-        // 為了簡化，這裡演示「一端」的標準流程 + 前導經文 (可擴充為五端)
-        // 序列結構：[ {type: 'prayerKey', label: '顯示進度', mysteryIndex: 0} ]
+        // 修正：現在包含完整的五端循環
         
         let rosarySequence = [];
         let currentIndex = 0;
@@ -459,58 +459,59 @@
             else todayMysteries = mysteries.glorious; // 週三、週日
         }
 
-        // 建立唸珠序列 (5端完整版太長，這裡演示「1端」的精華版，或做個開關)
-        // 為了體驗，我們先做「第1端」的完整流程
+        // 建立完整五端的唸珠序列
         function buildSequence() {
             rosarySequence = [];
             
-            // 1. 開始：聖號經
-            rosarySequence.push({ key: 'signOfCross', step: '開始', beadType: 'cross' });
+            // 1. 開始：聖號經 (mysteryIdx: -1 表示非特定奧蹟)
+            rosarySequence.push({ key: 'signOfCross', step: '開始', beadType: 'cross', mysteryIdx: -1 });
             
             // 2. 信經 (通常在大珠)
-            rosarySequence.push({ key: 'creed', step: '信經', beadType: 'large' });
+            rosarySequence.push({ key: 'creed', step: '信經', beadType: 'large', mysteryIdx: -1 });
             
             // 3. 天主經 (為教宗)
-            rosarySequence.push({ key: 'ourFather', step: '為教宗祈禱', beadType: 'large' });
+            rosarySequence.push({ key: 'ourFather', step: '為教宗祈禱', beadType: 'large', mysteryIdx: -1 });
             
             // 4. 聖母經 x3 (信望愛)
             for(let i=1; i<=3; i++) {
-                rosarySequence.push({ key: 'hailMary', step: `信望愛 ${i}/3`, beadType: 'small' });
+                rosarySequence.push({ key: 'hailMary', step: `信望愛 ${i}/3`, beadType: 'small', mysteryIdx: -1 });
             }
             
             // 5. 聖三光榮經
-            rosarySequence.push({ key: 'gloryBe', step: '光榮經', beadType: 'gap' });
+            rosarySequence.push({ key: 'gloryBe', step: '光榮經', beadType: 'gap', mysteryIdx: -1 });
 
-            // --- 第一端開始 ---
-            // 6. 宣讀奧蹟
-            rosarySequence.push({ 
-                key: 'mystery', 
-                mysteryIdx: 0, // 第一端
-                step: '第一端奧蹟', 
-                beadType: 'large' 
-            });
-            
-            // 7. 天主經
-            rosarySequence.push({ key: 'ourFather', step: '第一端', beadType: 'large' });
+            // --- 五端奧蹟循環 ---
+            for (let m = 0; m < 5; m++) {
+                const mNum = ["一", "二", "三", "四", "五"][m];
+                
+                // 宣讀奧蹟
+                rosarySequence.push({ 
+                    key: 'mystery', 
+                    mysteryIdx: m, 
+                    step: `第${mNum}端奧蹟`, 
+                    beadType: 'large' 
+                });
+                
+                // 天主經
+                rosarySequence.push({ key: 'ourFather', step: `第${mNum}端`, beadType: 'large', mysteryIdx: m });
 
-            // 8. 聖母經 x10
-            for(let i=1; i<=10; i++) {
-                rosarySequence.push({ key: 'hailMary', step: `聖母經 ${i}/10`, beadType: 'small', isDecade: true, decadeIndex: i });
+                // 聖母經 x10
+                for(let i=1; i<=10; i++) {
+                    rosarySequence.push({ key: 'hailMary', step: `聖母經 ${i}/10`, beadType: 'small', isDecade: true, decadeIndex: i, mysteryIdx: m });
+                }
+
+                // 聖三光榮經
+                rosarySequence.push({ key: 'gloryBe', step: `第${mNum}端結束`, beadType: 'gap', mysteryIdx: m });
+                
+                // 法蒂瑪聖母禱詞
+                rosarySequence.push({ key: 'fatima', step: '法蒂瑪禱詞', beadType: 'gap', mysteryIdx: m });
             }
-
-            // 9. 聖三光榮經
-            rosarySequence.push({ key: 'gloryBe', step: '第一端結束', beadType: 'gap' });
-            
-            // 10. 法蒂瑪聖母禱詞
-            rosarySequence.push({ key: 'fatima', step: '法蒂瑪禱詞', beadType: 'gap' });
-
-            // (若要完整5端，需重複步驟 6-10 四次，這裡為演示僅做一端)
             
             // 11. 結束：又聖母經
-            rosarySequence.push({ key: 'hailHolyQueen', step: '結束禱詞', beadType: 'large' });
+            rosarySequence.push({ key: 'hailHolyQueen', step: '結束禱詞', beadType: 'large', mysteryIdx: -1 });
             
             // 12. 聖號經
-            rosarySequence.push({ key: 'signOfCross', step: '禮成', beadType: 'cross' });
+            rosarySequence.push({ key: 'signOfCross', step: '禮成', beadType: 'cross', mysteryIdx: -1 });
         }
 
         // --- 4. 渲染珠子 (Visual Rendering) ---
@@ -549,14 +550,26 @@
             const mysteryTitle = document.getElementById('current-mystery-title');
             const mysteryDesc = document.getElementById('current-mystery-desc');
             
-            // 更新奧蹟標題 (如果是奧蹟步驟，或保持當前奧蹟)
-            // 這裡簡化：始終顯示第一端，若有多端需動態更新
-            const currentM = todayMysteries[0]; 
-            mysteryTitle.innerText = currentM.title;
-            mysteryDesc.innerText = currentM.desc;
+            // 更新奧蹟標題區塊
+            // 如果 step 包含 mysteryIdx >= 0，顯示對應奧蹟
+            // 否則顯示一般標題 (如：準備祈禱)
+            if (currentStep.mysteryIdx !== undefined && currentStep.mysteryIdx >= 0) {
+                const currentM = todayMysteries[currentStep.mysteryIdx]; 
+                mysteryTitle.innerText = currentM.title;
+                mysteryDesc.innerText = currentM.desc;
+            } else {
+                if (currentIndex < 5) {
+                    mysteryTitle.innerText = "準備祈禱";
+                    mysteryDesc.innerText = "請懷著虔敬的心";
+                } else {
+                    mysteryTitle.innerText = "結束禱詞";
+                    mysteryDesc.innerText = "感謝天主垂聽";
+                }
+            }
 
             // 更新經文
             if (currentStep.key === 'mystery') {
+                const currentM = todayMysteries[currentStep.mysteryIdx];
                 titleEl.innerText = currentM.title;
                 contentEl.innerText = currentM.desc + "\n(請默想此奧蹟)";
             } else {
@@ -575,7 +588,7 @@
                 const bead = document.getElementById(`bead-${currentStep.decadeIndex}`);
                 if(bead) bead.classList.add('active');
             } else {
-                // 非十遍經時，可以讓十字架或其他元素發光，這裡暫時不處理
+                // 非十遍經時，暫時沒有特定珠子發光
             }
         }
 
