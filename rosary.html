@@ -2,26 +2,33 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <!-- 視口設定：禁止縮放，適配手機 App 模式 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>線上輔助唸珠 | 線上玫瑰經祈禱團體</title>
     
+    <!-- PWA / Web App 設定 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="線上唸珠">
     <meta name="theme-color" content="#003366">
     
+    <!-- App 圖示：直接連結到 images/icon.png -->
     <link rel="icon" type="image/png" href="images/icon.png">
     <link rel="apple-touch-icon" href="images/icon.png">
 
+    <!-- Web App Manifest -->
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIuWtpOS4iuW1teePoCIsCiAgInNob3J0X25hbWUiOiAi5a2k5LiK5bW154+gIiwKICAic3RhcnRfdXJsIjogInJvc2FyeS5odG1sIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjRjVGN0ZBIiwKICAidGhlbWVfY29xvciI6ICIjMDAzMzY2IiwKICAiaWNvbnMiOiBbewogICAgInNyYyI6ICJpbWFnZXMvaWNvbi5wbmciLAogICAgInNpemVzIjogIjUxMng1MTIiLAogICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogIH1dCn0=">
 
+    <!-- 引入 Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
     
+    <!-- 引入 Font Awesome 圖示 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+        /* --- 繼承全域變數 --- */
         :root {
             --primary-color: #003366; 
             --secondary-color: #4A90E2; 
@@ -55,126 +62,353 @@
             padding-bottom: env(safe-area-inset-bottom);
         }
 
-        h1, h2, h3, h4 { font-family: 'Noto Serif TC', serif; color: var(--primary-color); letter-spacing: 0.05em; }
+        h1, h2, h3, h4 {
+            font-family: 'Noto Serif TC', serif;
+            color: var(--primary-color);
+            letter-spacing: 0.05em;
+        }
+
         a { text-decoration: none; color: inherit; }
 
-        /* Header */
+        /* --- 導覽列 --- */
         header {
             background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0, 51, 102, 0.1);
-            position: fixed; width: 100%; top: 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
             padding-top: env(safe-area-inset-top);
             z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
             height: calc(60px + env(safe-area-inset-top));
-            display: flex; flex-direction: column;
+            display: flex;
+            flex-direction: column;
         }
         
         .header-top-bar {
-            height: 4px; flex-shrink: 0;
-            background: repeating-linear-gradient(90deg, var(--primary-color), var(--primary-color) 20px, var(--secondary-color) 20px, var(--secondary-color) 40px, var(--accent-color) 40px, var(--accent-color) 45px, var(--white) 45px, var(--white) 50px);
+            height: 4px;
+            flex-shrink: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--primary-color),
+                var(--primary-color) 20px,
+                var(--secondary-color) 20px,
+                var(--secondary-color) 40px,
+                var(--accent-color) 40px,
+                var(--accent-color) 45px,
+                var(--white) 45px,
+                var(--white) 50px
+            );
         }
 
-        nav { max-width: 1100px; width: 100%; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center; height: 100%; }
-        .logo { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); display: flex; align-items: center; gap: 8px; }
-        .logo-icon-box { width: 32px; height: 32px; background-color: var(--primary-color); color: var(--white); display: flex; align-items: center; justify-content: center; border-radius: 50% 50% 0 50%; box-shadow: 2px 2px 0px var(--accent-color); }
+        nav {
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon-box {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50% 50% 0 50%;
+            box-shadow: 2px 2px 0px var(--accent-color);
+        }
+
         .logo-icon-box i { font-size: 0.9rem; margin-top: 2px; color: var(--white); }
         .logo-text { display: flex; flex-direction: column; line-height: 1.1; }
         .logo small { font-size: 0.65rem; font-weight: 400; color: var(--secondary-color); }
+
         .nav-links { display: flex; gap: 1rem; align-items: center; }
         .nav-links a { font-weight: 600; font-size: 0.9rem; transition: color 0.3s; color: var(--text-color); position: relative; }
         .nav-links a:hover { color: var(--secondary-color); }
-        .cta-button-small { background-color: var(--secondary-color); color: var(--white) !important; padding: 0.4rem 1rem; font-size: 0.85rem; transition: all 0.3s; border-radius: 50px; box-shadow: 0 4px 6px rgba(74, 144, 226, 0.3); }
-        .cta-button-small:hover { background-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 51, 102, 0.3); }
+
+        .cta-button-small {
+            background-color: var(--secondary-color);
+            color: var(--white) !important;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            border-radius: 50px;
+            box-shadow: 0 4px 6px rgba(74, 144, 226, 0.3);
+        }
+        .cta-button-small:hover { 
+            background-color: var(--primary-color); 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 51, 102, 0.3);
+        }
+
         .mobile-menu-btn { display: none; font-size: 1.4rem; cursor: pointer; color: var(--primary-color); }
 
-        /* Main Content */
+        /* --- 主要內容區塊 --- */
         #rosary-app {
             flex-grow: 1;
             margin-top: calc(60px + env(safe-area-inset-top));
-            display: flex; flex-direction: column; align-items: center; justify-content: space-evenly;
-            width: 100%; max-width: 800px; margin-left: auto; margin-right: auto;
-            padding: 10px; overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
+            overflow: hidden;
         }
 
-        .mystery-header { text-align: center; flex-shrink: 0; z-index: 5; margin-bottom: 2px; }
-        .mystery-header h2 { font-size: 1.1rem; margin-bottom: 0px; color: var(--primary-color); text-shadow: 0 2px 10px rgba(255,255,255,0.8); }
-        .mystery-header p { color: var(--light-text); font-size: 0.8rem; background: rgba(255,255,255,0.6); padding: 1px 10px; border-radius: 20px; }
+        /* 奧蹟標題卡 */
+        .mystery-header {
+            text-align: center;
+            flex-shrink: 0;
+            z-index: 5;
+            margin-bottom: 2px;
+        }
+        .mystery-header h2 { 
+            font-size: 1.1rem; 
+            margin-bottom: 0px; 
+            color: var(--primary-color);
+            text-shadow: 0 2px 10px rgba(255,255,255,0.8);
+        }
+        .mystery-header p { 
+            color: var(--light-text); 
+            font-size: 0.8rem; 
+            background: rgba(255,255,255,0.6);
+            padding: 1px 10px;
+            border-radius: 20px;
+        }
 
-        /* Beads */
+        /* --- 擬真念珠設計 --- */
         .beads-container {
-            position: relative; width: 38vmin; height: 38vmin; max-width: 300px; max-height: 300px;
-            margin: 5px 0; border-radius: 50%;
+            position: relative;
+            width: 38vmin; 
+            height: 38vmin;
+            max-width: 300px;
+            max-height: 300px;
+            margin: 5px 0;
+            border-radius: 50%;
         }
-        .chain-svg { position: absolute; top: -5%; left: -5%; width: 110%; height: 110%; pointer-events: none; opacity: 0.8; }
+        
+        .chain-svg {
+            position: absolute;
+            top: -5%; left: -5%;
+            width: 110%; height: 110%;
+            pointer-events: none;
+            opacity: 0.8;
+        }
 
+        /* 珠子通用樣式 (12px) */
         .bead {
-            position: absolute; width: 12px; height: 12px; border-radius: 50%;
-            transform: translate(-50%, -50%); transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 2;
-            background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.9) 0%, rgba(74, 144, 226, 0.8) 20%, rgba(0, 51, 102, 1) 80%, rgba(0, 20, 40, 1) 100%);
-            box-shadow: inset -1px -1px 3px rgba(0,0,0,0.4), 1px 2px 4px rgba(0,0,0,0.3);
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 2;
+            background: radial-gradient(circle at 35% 35%, 
+                rgba(255, 255, 255, 0.9) 0%, 
+                rgba(74, 144, 226, 0.8) 20%, 
+                rgba(0, 51, 102, 1) 80%, 
+                rgba(0, 20, 40, 1) 100%);
+            box-shadow: 
+                inset -1px -1px 3px rgba(0,0,0,0.4),
+                1px 2px 4px rgba(0,0,0,0.3);
         }
+
+        /* 大珠 (16px) */
         .bead[data-type="large"] {
-            width: 16px; height: 16px;
+            width: 16px; 
+            height: 16px; 
             background: radial-gradient(circle at 30% 30%, #fffbe6, #D4AF37, #b8860b);
             border: 1px solid rgba(255,255,255,0.4);
-            box-shadow: inset -1px -1px 4px rgba(0,0,0,0.5), 0 0 0 1px rgba(184, 134, 11, 0.3), 1px 2px 4px rgba(0,0,0,0.4);
+            box-shadow: 
+                inset -1px -1px 4px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(184, 134, 11, 0.3),
+                1px 2px 4px rgba(0,0,0,0.4);
         }
+        
+        /* 十字架 */
         .bead[data-type="cross"] {
-            width: 20px; height: 28px; border-radius: 2px;
+            width: 18px; height: 26px;
+            border-radius: 2px;
             background: linear-gradient(135deg, #f5f5f5 0%, #dcdcdc 50%, #999 100%);
             clip-path: polygon(35% 0%, 65% 0%, 65% 30%, 100% 30%, 100% 50%, 65% 50%, 65% 100%, 35% 100%, 35% 50%, 0% 50%, 0% 30%, 35% 30%);
-            box-shadow: none; filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.5));
+            box-shadow: none;
+            filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.5));
         }
+
+        /* 激活狀態 */
         .bead.active {
             transform: translate(-50%, -50%) scale(1.8);
-            box-shadow: 0 0 12px var(--accent-color), 0 0 25px var(--secondary-color), inset -2px -2px 6px rgba(0,0,0,0.4);
-            filter: brightness(1.2); z-index: 100;
+            box-shadow: 
+                0 0 12px var(--accent-color), 
+                0 0 20px var(--secondary-color),
+                inset -2px -2px 6px rgba(0,0,0,0.4);
+            filter: brightness(1.2);
+            z-index: 100;
         }
+        
+        /* 中心聖母牌 */
         .center-medal {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
             width: 40px; height: 50px;
             background: radial-gradient(ellipse at center, #fff, #e0e0e0);
-            border: 2px solid var(--accent-color); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; color: var(--primary-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.1); z-index: 1;
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.1);
+            z-index: 1;
         }
 
-        /* Card */
+        /* 經文顯示卡片 */
         .prayer-display {
-            background-color: var(--white); width: 95%; max-width: 500px; padding: 1rem 1.2rem;
-            border-radius: 16px; text-align: center;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08); border-bottom: 4px solid var(--primary-color);
-            position: relative; cursor: pointer; display: flex; flex-direction: column; justify-content: center;
-            min-height: 20vh; max-height: 35vh; flex-shrink: 1; overflow-y: auto;
+            background-color: var(--white);
+            width: 95%;
+            max-width: 500px;
+            padding: 1rem 1.2rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-bottom: 4px solid var(--primary-color);
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 20vh;
+            max-height: 35vh;
+            flex-shrink: 1;
+            overflow-y: auto;
         }
-        .prayer-display:active { background-color: #f8fafc; transform: scale(0.99); }
-        .prayer-title { font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 0.3rem; flex-shrink: 0; }
-        .prayer-text { font-size: 1rem; color: #444; line-height: 1.5; flex-grow: 1; display: flex; align-items: center; justify-content: center; white-space: pre-wrap; transition: font-size 0.2s; }
-        .progress-indicator { margin-top: 0.5rem; font-size: 0.75rem; color: var(--light-text); background: #eee; padding: 2px 10px; border-radius: 20px; align-self: center; flex-shrink: 0; }
-        .tap-hint { font-size: 0.7rem; color: #aaa; margin-top: 3px; flex-shrink: 0; }
-        .font-controls { position: absolute; top: 5px; right: 5px; display: flex; gap: 5px; z-index: 20; }
-        .font-btn { background-color: rgba(0,0,0,0.05); border: none; width: 28px; height: 28px; border-radius: 50%; color: var(--primary-color); font-weight: bold; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        
+        .prayer-display:active {
+            background-color: #f8fafc;
+            transform: scale(0.99);
+        }
+
+        .prayer-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+            flex-shrink: 0;
+        }
+        
+        .prayer-text {
+            font-size: 1rem;
+            color: #444;
+            line-height: 1.5;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: pre-wrap;
+            transition: font-size 0.2s;
+        }
+
+        .progress-indicator {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--light-text);
+            background: #eee;
+            padding: 2px 10px;
+            border-radius: 20px;
+            align-self: center;
+            flex-shrink: 0;
+        }
+
+        .tap-hint {
+            font-size: 0.7rem;
+            color: #aaa;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+
+        .font-controls {
+            position: absolute;
+            top: 5px; right: 5px;
+            display: flex; gap: 5px;
+            z-index: 20;
+        }
+        
+        .font-btn {
+            background-color: rgba(0,0,0,0.05);
+            border: none; width: 28px; height: 28px; border-radius: 50%;
+            color: var(--primary-color); font-weight: bold; font-size: 0.8rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
         .font-btn:hover { background-color: var(--secondary-color); color: white; }
 
-        .controls { display: flex; gap: 20px; margin-bottom: 5px; flex-shrink: 0; }
-        .control-btn { background-color: var(--white); border: 1px solid var(--primary-color); color: var(--primary-color); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; }
+        .controls {
+            display: flex; gap: 20px; margin-bottom: 5px; flex-shrink: 0;
+        }
+
+        .control-btn {
+            background-color: var(--white);
+            border: 1px solid var(--primary-color);
+            color: var(--primary-color);
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+        }
         .control-btn:active { background-color: var(--primary-color); color: var(--white); }
 
-        .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); background-color: rgba(0,0,0,0.7); color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.9rem; opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 2000; }
+        .toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.7); color: white;
+            padding: 8px 16px; border-radius: 20px; font-size: 0.9rem;
+            opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 2000;
+        }
         .toast.show { opacity: 1; }
 
-        footer { background-color: var(--primary-color); color: var(--white); padding: 0.3rem; text-align: center; border-top: 2px solid var(--accent-color); font-size: 0.7rem; flex-shrink: 0; height: auto; padding-bottom: calc(0.3rem + env(safe-area-inset-bottom)); }
+        footer {
+            background-color: var(--primary-color); color: var(--white); 
+            padding: 0.3rem; text-align: center;
+            border-top: 2px solid var(--accent-color);
+            font-size: 0.7rem; flex-shrink: 0; height: auto;
+            padding-bottom: calc(0.3rem + env(safe-area-inset-bottom));
+        }
         footer p { margin: 2px 0; opacity: 0.8; }
         .social-links { display: none; }
-        @media (min-height: 800px) { .social-links { display: block; margin: 5px 0; } .social-links a { margin: 0 5px; color: var(--accent-color); font-size: 1rem; } footer { padding: 0.8rem; padding-bottom: calc(0.8rem + env(safe-area-inset-bottom)); } }
+
+        @media (min-height: 800px) {
+            .social-links { display: block; margin: 5px 0; }
+            .social-links a { margin: 0 5px; color: var(--accent-color); font-size: 1rem; }
+            footer { padding: 0.8rem; padding-bottom: calc(0.8rem + env(safe-area-inset-bottom)); }
+        }
+
         @media (max-width: 768px) {
             .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--section-bg); flex-direction: column; padding: 1.5rem; box-shadow: 0 10px 15px rgba(0,0,0,0.1); border-bottom: 5px solid var(--secondary-color); }
             .nav-links.active { display: flex; }
             .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
             .mobile-menu-btn { display: block; }
+            
             .beads-container { width: 50vmin; height: 50vmin; }
             .prayer-display { width: 90%; min-height: 20vh; }
             .prayer-text { font-size: 1rem; }
@@ -197,6 +431,7 @@
                 <a href="index.html">回到首頁</a>
                 <a href="index.html#about">關於我們</a>
                 <a href="index.html#info">聚會資訊</a>
+                <a href="index.html#promote">加入善會</a>
                 <a href="rosary.html" style="color: var(--secondary-color);"><i class="fa-solid fa-xs fa-bullseye"></i> 線上唸珠</a>
                 <a href="intercession.html">代禱牆</a>
                 <a href="https://line.me/R/meeting/6e1105b1919945ddad5390853d75be5d" target="_blank" class="cta-button-small">進入會議室</a>
@@ -309,23 +544,14 @@
 
         function buildSequence() {
             rosarySequence = [];
-            // 修正：準備階段共 7 步
-            // 1. 十字架: 聖號經 + 信經 (位置 0 點鐘)
             rosarySequence.push({ key: 'signOfCross', step: '開始', beadId: 'bead-cross', mysteryIdx: -1 });
             rosarySequence.push({ key: 'creed', step: '信經', beadId: 'bead-cross', mysteryIdx: -1 });
-            
-            // 2. 大珠: 天主經
             rosarySequence.push({ key: 'ourFather', step: '為教宗祈禱', beadId: 'bead-start-large', mysteryIdx: -1 });
-            
-            // 3. 小珠 x3: 聖母經 (信望愛)
             for(let i=1; i<=3; i++) {
                 rosarySequence.push({ key: 'hailMary', step: `信望愛 ${i}/3`, beadId: `bead-start-${i}`, mysteryIdx: -1 });
             }
-            
-            // 4. 光榮經 (不掛珠子，或與聖母牌重疊)
-            rosarySequence.push({ key: 'gloryBe', step: '光榮經', beadId: 'center-medal', mysteryIdx: -1 });
+            rosarySequence.push({ key: 'gloryBe', step: '光榮經', beadId: 'bead-gap', mysteryIdx: -1 });
 
-            // --- 五端奧蹟循環 ---
             for (let m = 0; m < 5; m++) {
                 const mNum = ["一", "二", "三", "四", "五"][m];
                 rosarySequence.push({ key: 'mystery', mysteryIdx: m, step: `第${mNum}端奧蹟`, beadId: 'bead-large', isLarge: true });
@@ -333,8 +559,8 @@
                 for(let i=1; i<=10; i++) {
                     rosarySequence.push({ key: 'hailMary', step: `聖母經 ${i}/10`, beadId: `bead-${i}`, mysteryIdx: m });
                 }
-                rosarySequence.push({ key: 'gloryBe', step: `第${mNum}端結束`, beadId: 'center-medal', mysteryIdx: m });
-                rosarySequence.push({ key: 'fatima', step: '法蒂瑪禱詞', beadId: 'center-medal', mysteryIdx: m });
+                rosarySequence.push({ key: 'gloryBe', step: `第${mNum}端結束`, beadId: 'bead-gap', mysteryIdx: m });
+                rosarySequence.push({ key: 'fatima', step: '法蒂瑪禱詞', beadId: 'bead-gap', mysteryIdx: m });
             }
             
             rosarySequence.push({ key: 'hailHolyQueen', step: '結束禱詞', beadId: 'center-medal', mysteryIdx: -1 });
@@ -349,25 +575,16 @@
             const radius = 48;
             const total = 11;
             
-            // 10顆小珠 + 1顆大珠 (Top)
             for (let i = 1; i <= 10; i++) {
                 const angleDeg = -90 + (i * (360 / total));
                 createBead(container, radius, angleDeg, `bead-${i}`, 'small');
             }
             createBead(container, radius, -90, 'bead-large', 'large');
             
-            // 尾巴部分 (由上往下排列：聖母牌 -> 1 -> 2 -> 3 -> 大珠 -> 十字架)
-            // 為了視覺連貫，我們從 center-medal 往下排
-            
-            // 前導小珠 3, 2, 1
             createBead(container, 18, 90, 'bead-start-3', 'small');
             createBead(container, 28, 90, 'bead-start-2', 'small');
             createBead(container, 38, 90, 'bead-start-1', 'small');
-            
-            // 前導大珠 (修正：補上這顆)
             createBead(container, 48, 90, 'bead-start-large', 'large');
-            
-            // 十字架 (最下方)
             createBead(container, 50, 180, 'bead-cross', 'cross'); 
         }
         
@@ -379,23 +596,15 @@
             
             if (type === 'cross') {
                 bead.style.left = '50%';
-                bead.style.top = '108%'; // 垂掛在更下方
+                bead.style.top = '108%'; 
             } else if (id === 'bead-start-large') {
                 bead.style.left = '50%';
-                bead.style.top = '92%'; // 在小珠下方
+                bead.style.top = '92%'; 
             } else if (id.startsWith('bead-start-')) {
-                // 小珠垂直排列
-                const yOffset = parseInt(id.split('-')[2]); // 1, 2, 3
-                // 3最上面(靠近圓心), 1最下面
-                // 3: 65%, 2: 75%, 1: 85%
-                // 調整：3: 62%, 2: 72%, 1: 82%
-                // rPercent 在這裡是傳入值，我們稍微手動覆寫垂直位置以求美觀
-                // 傳入的 rPercent 已經是相對距離，這裡做微調
                 const yPos = 50 + rPercent; 
                 bead.style.left = '50%';
                 bead.style.top = `${yPos}%`;
             } else {
-                // 圓環上的珠子
                 const x = 50 + rPercent * Math.cos(angleDeg * Math.PI / 180);
                 const y = 50 + rPercent * Math.sin(angleDeg * Math.PI / 180);
                 bead.style.left = `${x}%`;
@@ -447,8 +656,6 @@
             const mysteryTitle = document.getElementById('current-mystery-title');
             const mysteryDesc = document.getElementById('current-mystery-desc');
             
-            // 修正標題判斷邏輯
-            // 準備階段是前7步 (0-6)
             if (currentIndex < 7) {
                 mysteryTitle.innerText = "準備祈禱";
                 mysteryDesc.innerText = "請懷著虔敬的心";
@@ -475,7 +682,9 @@
             document.querySelectorAll('.bead').forEach(b => b.classList.remove('active'));
             if (currentStep.beadId) {
                 const targetBead = document.getElementById(currentStep.beadId);
-                if (targetBead) targetBead.classList.add('active');
+                if (targetBead) {
+                    targetBead.classList.add('active');
+                }
             }
         }
 
@@ -524,6 +733,19 @@
                 });
             }
         };
+
+        // --- 讓 PWA 模式下的連結在 App 內開啟，而不是跳出到 Safari ---
+        document.addEventListener('click', function (event) {
+            var a = event.target.closest('a');
+            if (a && a.href.startsWith(window.location.origin) && a.target !== '_blank') {
+                // 如果只是錨點 (#)，讓預設行為處理 (平滑滾動等)
+                // 但如果是不同頁面的連結，強制更改 location
+                if (a.pathname === window.location.pathname && a.hash) return;
+                
+                event.preventDefault();
+                window.location.href = a.href;
+            }
+        });
     </script>
 </body>
 </html>
