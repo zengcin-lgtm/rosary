@@ -37,7 +37,6 @@
         }
 
         /* --- 原住民風格圖騰裝飾 (藍金編織版) --- */
-        /* 模擬原住民織布的幾何條紋，但使用聖母色系 */
         .indigenous-strip {
             height: 15px;
             width: 100%;
@@ -60,7 +59,6 @@
             height: 20px;
             width: 120px;
             margin: 20px auto 0;
-            /* 使用藍色與金色交織的菱形紋樣 */
             background-image: 
                 linear-gradient(60deg, var(--secondary-color) 25%, transparent 25%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color)), 
                 linear-gradient(120deg, var(--secondary-color) 25%, transparent 25%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color));
@@ -76,11 +74,10 @@
             font-family: 'Noto Sans TC', sans-serif;
             color: var(--text-color);
             background-color: var(--bg-color);
-            /* 背景紋理：淡淡的十字紋或織紋 */
             background-image: radial-gradient(#4A90E2 0.5px, transparent 0.5px), radial-gradient(#4A90E2 0.5px, #F5F7FA 0.5px);
             background-size: 20px 20px;
             background-position: 0 0, 10px 10px;
-            background-attachment: fixed; /* 讓背景固定，產生層次感 */
+            background-attachment: fixed;
             line-height: 1.7;
             scroll-behavior: smooth;
         }
@@ -105,7 +102,6 @@
             border-bottom: 1px solid rgba(0,0,0,0.05);
         }
         
-        /* 頂部編織條 */
         .header-top-bar {
             height: 6px;
             background: repeating-linear-gradient(
@@ -148,8 +144,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* 改為圓形或更柔和的形狀，或者保留幾何感 */
-            border-radius: 50% 50% 0 50%; /* 類似水滴或花瓣 */
+            border-radius: 50% 50% 0 50%; 
             margin: 5px;
             box-shadow: 2px 2px 0px var(--accent-color);
         }
@@ -168,7 +163,7 @@
             padding: 0.6rem 1.4rem;
             font-size: 0.9rem;
             transition: all 0.3s;
-            border-radius: 50px; /* 圓潤風格 */
+            border-radius: 50px; 
             box-shadow: 0 4px 6px rgba(74, 144, 226, 0.3);
         }
         .cta-button-small:hover { 
@@ -187,18 +182,15 @@
         #home {
             height: 90vh;
             min-height: 600px;
-            /* 背景圖：保留玫瑰念珠，但疊加藍色漸層 */
             background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.6)), url('https://images.unsplash.com/photo-1574602636282-3e2840c92158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
             background-size: cover;
             background-position: center;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white);
             padding-top: 80px; position: relative;
         }
-        /* 底部裝飾：幾何山形紋 */
         #home::after {
             content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; 
             background-color: var(--bg-color);
-            /* 鋸齒狀邊緣，模擬編織 */
             mask-image: linear-gradient(45deg, transparent 33%, #000 33%, #000 66%, transparent 66%), linear-gradient(-45deg, transparent 33%, #000 33%, #000 66%, transparent 66%);
             mask-size: 40px 100%;
             -webkit-mask-image: linear-gradient(45deg, transparent 33%, #000 33%, #000 66%, transparent 66%), linear-gradient(-45deg, transparent 33%, #000 33%, #000 66%, transparent 66%);
@@ -213,9 +205,39 @@
             border: 1px solid var(--accent-color); 
             border-radius: 50px;
         }
-        #home h1 { color: var(--white); font-size: 4rem; margin-bottom: 1.5rem; text-shadow: 0 4px 15px rgba(0,0,0,0.5); line-height: 1.2; font-family: 'Noto Serif TC', serif; }
+        #home h1 { color: var(--white); font-size: 4rem; margin-bottom: 1rem; text-shadow: 0 4px 15px rgba(0,0,0,0.5); line-height: 1.2; font-family: 'Noto Serif TC', serif; }
         #home p { font-size: 1.3rem; margin-bottom: 3rem; max-width: 700px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); font-weight: 400; opacity: 0.9; }
         
+        /* 今日奧蹟卡片樣式 */
+        .mystery-badge {
+            background: rgba(0, 51, 102, 0.5); 
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--accent-color);
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            margin-bottom: 2.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--white);
+            font-weight: 500;
+            font-size: 1.15rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+            letter-spacing: 0.05em;
+        }
+        
+        .mystery-badge i {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .hero-btn {
             background-color: var(--accent-color); 
             color: var(--primary-color); 
@@ -225,7 +247,6 @@
             border: none; 
             transition: all 0.3s;
             border-radius: 4px;
-            /* 加入一點原住民風格的邊框裝飾 */
             border-bottom: 4px solid #b8962e;
         }
         .hero-btn:hover { 
@@ -240,7 +261,6 @@
         
         .about-image { 
             width: 100%; height: 350px; 
-            /* 外框：深藍 */
             border: 2px solid var(--primary-color); 
             padding: 8px; 
             background-color: var(--section-bg);
@@ -250,11 +270,9 @@
         
         .about-image img { 
             width: 100%; height: 100%; object-fit: cover; 
-            /* 圖片濾鏡：稍微調冷，配合聖母藍 */
             filter: contrast(1.05) brightness(1.05);
         }
         
-        /* 裝飾角落：藍金編織幾何 */
         .about-image::before { 
             content: ''; position: absolute; top: -6px; left: -6px; width: 40px; height: 40px; 
             border-top: 6px solid var(--accent-color); border-left: 6px solid var(--accent-color); 
@@ -280,7 +298,7 @@
             width: 80px; height: 80px; margin: 0 auto 1.5rem auto; 
             background-color: var(--white); 
             color: var(--primary-color);
-            transform: rotate(45deg); /* 菱形，呼應祖靈之眼 */
+            transform: rotate(45deg); 
             display: flex; align-items: center; justify-content: center; 
             border: 2px solid var(--secondary-color);
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -297,7 +315,6 @@
             background-image: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.9)), url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
         }
         
-        /* 上下邊緣裝飾：編織條 */
         #promote::before { 
             content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 10px;
             background: repeating-linear-gradient(90deg, var(--accent-color), var(--accent-color) 10px, transparent 10px, transparent 20px);
@@ -320,7 +337,6 @@
             background-color: var(--white); 
             padding: 2rem; 
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
-            /* 頂部線條改為編織紋 */
             border-top: 4px solid var(--secondary-color); 
             border-radius: 8px;
             display: flex; flex-direction: column; 
@@ -343,7 +359,7 @@
         .fab-btn { 
             width: 60px; height: 60px; 
             background-color: var(--secondary-color); color: var(--white); 
-            transform: rotate(45deg); /* 菱形 */
+            transform: rotate(45deg); 
             display: flex; align-items: center; justify-content: center; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
             cursor: pointer; transition: all 0.3s; 
@@ -356,7 +372,6 @@
         /* --- Footer --- */
         footer { 
             background-color: var(--primary-color); color: var(--white); padding: 4rem 1.5rem; text-align: center; 
-            /* 頂部加入圖騰條 */
             border-top: 8px solid var(--accent-color);
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
@@ -401,6 +416,13 @@
     <section id="home">
         <div class="subtitle">每晚 9 點．LINE 會議室</div>
         <h1>線上<br>玫瑰經祈禱團體</h1>
+        
+        <!-- 新增：今日奧蹟卡片 -->
+        <div id="daily-mystery-card" class="mystery-badge">
+            <i id="mystery-icon" class="fa-solid fa-star"></i>
+            <span>今日默想：<span id="mystery-text">載入中...</span></span>
+        </div>
+
         <p>我們是一群玫瑰經善會的成員，每天晚上9點，<br>在雲端齊聚，用祈禱編織對上主的讚美。</p>
         <a href="#info" class="hero-btn">加入今晚的祈禱</a>
     </section>
@@ -411,17 +433,15 @@
             <div class="about-text">
                 <h3><i class="fa-solid fa-users"></i> 雲端相聚．共融祈禱</h3>
                 <p>這個網頁是由一群熱愛信仰的平信徒所建立的線上家園。我們都是「玫瑰經善會」的成員，深感團體祈禱的力量，因此自發組成了這個線上祈禱群組。</p>
-                <p>我們每天晚上 9 點在 <strong>LINE 會議室</strong> 連線。歡迎所有朋友，尤其是青年朋友和我們一起。讓我們用最純樸的心，透過玫瑰經，將自己託付給聖母媽媽。</p>
+                <p>我們每天晚上 9 點在 <strong>LINE 會議室</strong> 連線。誠摯歡迎所有愛好玫瑰經的朋友加入。讓我們用最純樸的心，透過玫瑰經，將自己託付給天上慈母。</p>
             </div>
             <div class="about-image">
-                <!-- 圖片示意：玫瑰念珠與聖經，配合藍色濾鏡 -->
                 <img src="https://static.wixstatic.com/media/eb4a0a_ca202b34034347b7bf7bd7abb25b7697~mv2.png/v1/fill/w_322,h_362,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/%E7%8E%AB%E7%91%B0%E7%B6%93%E5%96%84%E6%9C%83.png" alt="玫瑰經念珠特寫">
             </div>
         </div>
     </section>
 
     <section id="info">
-        <!-- 藍金配色的原住民織紋 -->
         <div class="indigenous-strip"></div>
         <h2 class="section-title" style="margin-top: 2rem;">聚會資訊<div class="totem-divider"></div></h2>
         <div class="info-grid">
@@ -459,7 +479,7 @@
                 道明會中華聖母準會省<br>玫瑰經推行人 葛維志 神父
             </div>
             <div style="margin-top: 2rem;">
-                <a href="https://www.dominicantaiwan.net/confraternity" target="_blank" class="cta-button-small" style="background-color: transparent; color: var(--white) !important; border: 2px solid var(--white); display: inline-block; text-decoration: none;">
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfLN16UgWTei7_gYxX40iz0Vpkq7-OIrnTrd-8g6VqHR6mezg/viewform" target="_blank" class="cta-button-small" style="background-color: transparent; color: var(--white) !important; border: 2px solid var(--white); display: inline-block; text-decoration: none;">
                     <i class="fa-solid fa-file-pen"></i> 加入我們
                 </a>
             </div>
@@ -628,6 +648,46 @@
             }
         }
 
+        // --- 新增功能：自動判斷今日玫瑰經奧蹟 ---
+        function setDailyMystery() {
+            const today = new Date().getDay(); // 0 = 週日, 1 = 週一, ...
+            const mysteryText = document.getElementById('mystery-text');
+            const mysteryIcon = document.getElementById('mystery-icon');
+            
+            // 玫瑰經奧蹟對照表
+            let mysteryName = "";
+            let iconClass = "";
+
+            switch(today) {
+                case 1: // Mon
+                case 6: // Sat
+                    mysteryName = "歡喜五端 (Joyful Mysteries)";
+                    iconClass = "fa-face-smile-beam"; 
+                    break;
+                case 2: // Tue
+                case 5: // Fri
+                    mysteryName = "痛苦五端 (Sorrowful Mysteries)";
+                    iconClass = "fa-heart-pulse"; // 用心跳或十架
+                    break;
+                case 3: // Wed
+                case 0: // Sun
+                    mysteryName = "榮福五端 (Glorious Mysteries)";
+                    iconClass = "fa-crown"; // 皇冠
+                    break;
+                case 4: // Thu
+                    mysteryName = "光明五端 (Luminous Mysteries)";
+                    iconClass = "fa-sun"; // 太陽/光芒
+                    break;
+            }
+
+            if (mysteryText && mysteryIcon) {
+                mysteryText.innerText = mysteryName;
+                mysteryIcon.className = `fa-solid ${iconClass}`;
+            }
+        }
+
+        // 初始化
+        setDailyMystery();
         fetchAndRenderNotes();
 
         const mobileBtn = document.querySelector('.mobile-menu-btn');
