@@ -828,6 +828,19 @@
             }
         }
 
+        // --- 讓 PWA 模式下的連結在 App 內開啟，而不是跳出到 Safari ---
+        document.addEventListener('click', function (event) {
+            var a = event.target.closest('a');
+            if (a && a.href.startsWith(window.location.origin) && a.target !== '_blank') {
+                // 如果只是錨點 (#)，讓預設行為處理 (平滑滾動等)
+                // 但如果是不同頁面的連結，強制更改 location
+                if (a.pathname === window.location.pathname && a.hash) return;
+                
+                event.preventDefault();
+                window.location.href = a.href;
+            }
+        });
+
         // 每秒更新
         setInterval(updateCountdown, 1000);
         updateCountdown(); // 初次執行
