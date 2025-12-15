@@ -9,7 +9,8 @@
     <!-- PWA / Web App 設定 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="代禱意向">
+    <!-- 修正亂碼：使用 HTML 代碼 (代禱意向) -->
+    <meta name="apple-mobile-web-app-title" content="&#20195;&#31153;&#24847;&#21521;">
     <meta name="theme-color" content="#003366">
     
     <!-- App 圖示：直接連結到 images/icon.png -->
@@ -229,13 +230,6 @@
             font-weight: 700;
         }
 
-        /* 手機版樣式調整 */
-        @media (max-width: 768px) {
-            .nav-links { display: none; } /* 隱藏上方導覽 */
-            .bottom-nav { display: block; } /* 顯示下方導覽 */
-            .fab-container { bottom: calc(70px + env(safe-area-inset-bottom)); right: 20px; } /* 避開底部導覽列 */
-        }
-
         /* --- 頁面標題區塊 --- */
         .page-header {
             padding-top: calc(120px + env(safe-area-inset-top)); /* 適配 PWA 頂部 padding */
@@ -392,7 +386,10 @@
             .nav-links.active { display: flex; }
             .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
             .mobile-menu-btn { display: block; }
-            .fab-container { bottom: calc(20px + env(safe-area-inset-bottom)); right: 20px; }
+            .bottom-nav { display: block; }
+            
+            /* 修正：手機版將 FAB 往上移，避開底部導覽列 (60px + 20px padding = 80px) */
+            .fab-container { bottom: calc(80px + env(safe-area-inset-bottom)); right: 20px; }
         }
     </style>
 </head>
