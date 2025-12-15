@@ -9,7 +9,8 @@
     <!-- PWA / Web App 設定 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="代禱意向">
+    <!-- 修正亂碼：使用 HTML 代碼 (代禱意向) -->
+    <meta name="apple-mobile-web-app-title" content="&#20195;&#31153;&#24847;&#21521;">
     <meta name="theme-color" content="#003366">
     
     <!-- App 圖示：直接連結到 images/icon.png -->
@@ -198,9 +199,64 @@
             font-weight: 700;
         }
 
+        /* --- 新增：善會祈禱文收折卡片 (Accordion) --- */
+        .accordion-box {
+            max-width: 800px;
+            margin: 0 auto 3rem auto;
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 51, 102, 0.08);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            width: 90%;
+        }
+        .accordion-header {
+            padding: 1.2rem 1.5rem;
+            background-color: rgba(74, 144, 226, 0.08); 
+            color: var(--primary-color);
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+            user-select: none;
+        }
+        .accordion-header:hover {
+            background-color: rgba(74, 144, 226, 0.15);
+        }
+        .accordion-header i {
+            transition: transform 0.3s;
+            color: var(--secondary-color);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.3s;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--white);
+        }
+        .accordion-content.active {
+            padding: 2rem; 
+            border-top: 1px solid var(--border-color);
+        }
+        .accordion-content p {
+            margin-bottom: 1rem;
+        }
+        .highlight-text {
+            color: var(--accent-color); /* 金色強調 */
+            font-weight: 700;
+            background: linear-gradient(120deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0.05) 100%);
+            padding: 5px;
+            border-radius: 4px;
+            border-left: 3px solid var(--accent-color);
+        }
+
         /* --- 代禱牆列表 --- */
         #intercession-list {
-            padding: 2rem 1.5rem;
+            padding: 0 1.5rem 2rem 1.5rem;
             max-width: 1100px;
             margin: 0 auto;
             flex-grow: 1; 
@@ -316,6 +372,22 @@
         <h2 class="section-title">代禱意向總覽<div class="totem-divider"></div></h2>
         <p style="color: #666; max-width: 600px; margin: 0 auto;">在這裡，我們彼此代禱，分擔重擔。<br>願天主的平安與您同在。</p>
     </section>
+
+    <!-- 新增：善會祈禱文 Accordion -->
+    <div class="accordion-box">
+        <div class="accordion-header" onclick="toggleAccordion()">
+            <span>📿 玫瑰經善會成員的共同代禱（點擊展開）</span>
+            <i class="fa-solid fa-chevron-down" id="accordion-icon"></i>
+        </div>
+        <div class="accordion-content" id="accordion-body">
+            <p>玫瑰之后，眾人之母，我們在悲傷、試煉和需要中求助於您。罪使我們軟弱無助，但主的恩寵卻使我們得以痊癒和堅強。</p>
+            <p>我們祈求獲得恩寵，讓我們愛耶穌如您所愛，信如您所信，望如您所望；我們祈求分享您心靈的純潔。賜給我們真正的悔罪之心，使我們像您和耶穌一樣愛人。為我們獲得聖神的恩賜，使我們有您的智慧，您的理解，您的知識，您的謹慎，您的忍耐，您的勇氣，並且渴望為每個人追求公義，以您愛子耶穌聖心的渴望充滿我們的心靈。</p>
+            <p>當我們祈禱玫瑰經時，請開啟我們的心靈，讓我們理解奧蹟中所包含的福音教導。</p>
+            <p class="highlight-text">我們特別為我們所愛的玫瑰經善會成員祈禱。無論他們身在何處，請幫助他們；引導他們，保護他們，使他們在試驗和苦難中堅強。我們因著對您及彼此偉大的慈愛互相吸引而成為一個共同連結。請使我們對您的愛子和您的玫瑰經忠誠直至死亡。</p>
+            <p>為煉獄中的靈魂轉求，特別是為已經過世的玫瑰經善會成員轉求。願他們安息。最後，我們為自己和我們所愛的人祈求努力不懈的恩寵，使我們都能永遠在天國相聚。</p>
+            <p>聖道明，您從玫瑰經中得到了如此豐富的恩寵和力量，請為我們祈禱。阿們。</p>
+        </div>
+    </div>
 
     <div id="intercession-list">
         <div class="wall-grid" id="wallGrid">
@@ -497,20 +569,37 @@
             return result;
         }
 
+        // --- 新增：Accordion 開關邏輯 ---
+        function toggleAccordion() {
+            const body = document.getElementById('accordion-body');
+            const icon = document.getElementById('accordion-icon');
+            
+            if (body.style.maxHeight) {
+                // 收起
+                body.style.maxHeight = null;
+                body.classList.remove('active');
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                // 展開
+                body.classList.add('active');
+                body.style.maxHeight = body.scrollHeight + "px";
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        }
+
         init();
 
         const mobileBtn = document.querySelector('.mobile-menu-btn');
         const navLinks = document.querySelector('.nav-links');
         mobileBtn.addEventListener('click', () => { navLinks.classList.toggle('active'); });
 
-        // --- 讓 PWA 模式下的連結在 App 內開啟，而不是跳出到 Safari ---
+        // PWA 連結處理
         document.addEventListener('click', function (event) {
             var a = event.target.closest('a');
             if (a && a.href.startsWith(window.location.origin) && a.target !== '_blank') {
-                // 如果只是錨點 (#)，讓預設行為處理 (平滑滾動等)
-                // 但如果是不同頁面的連結，強制更改 location
                 if (a.pathname === window.location.pathname && a.hash) return;
-                
                 event.preventDefault();
                 window.location.href = a.href;
             }
