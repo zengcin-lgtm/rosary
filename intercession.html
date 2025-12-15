@@ -9,8 +9,7 @@
     <!-- PWA / Web App 設定 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- 修正亂碼：使用 HTML 代碼 (代禱意向) -->
-    <meta name="apple-mobile-web-app-title" content="&#20195;&#31153;&#24847;&#21521;">
+    <meta name="apple-mobile-web-app-title" content="代禱意向">
     <meta name="theme-color" content="#003366">
     
     <!-- App 圖示：直接連結到 images/icon.png -->
@@ -81,7 +80,7 @@
             flex-direction: column;
             /* PWA 適配 */
             padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
+            padding-bottom: calc(70px + env(safe-area-inset-bottom)); /* 預留底部導覽列空間 */
         }
 
         h1, h2, h3, h4 {
@@ -181,7 +180,61 @@
             box-shadow: 0 6px 12px rgba(0, 51, 102, 0.3);
         }
 
-        .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-color); }
+        .mobile-menu-btn { display: none !important; }
+
+        /* --- 底部導覽列 (App Style) --- */
+        .bottom-nav {
+            display: none; /* 電腦版隱藏 */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: calc(60px + env(safe-area-inset-bottom));
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color);
+            z-index: 9999;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        .bottom-nav-inner {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            color: #94a3b8; /* 未選中顏色 */
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: color 0.3s;
+            height: 100%;
+        }
+
+        .nav-item i {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* 手機版樣式調整 */
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* 隱藏上方導覽 */
+            .bottom-nav { display: block; } /* 顯示下方導覽 */
+            .fab-container { bottom: calc(70px + env(safe-area-inset-bottom)); right: 20px; } /* 避開底部導覽列 */
+        }
 
         /* --- 頁面標題區塊 --- */
         .page-header {
@@ -403,6 +456,28 @@
             <i class="fa-solid fa-pen"></i>
         </a>
     </div>
+
+    <!-- 底部導覽列 (僅手機顯示) -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-inner">
+            <a href="index.html" class="nav-item">
+                <i class="fa-solid fa-house"></i>
+                <span>首頁</span>
+            </a>
+            <a href="rosary.html" class="nav-item">
+                <i class="fa-solid fa-bullseye"></i>
+                <span>唸珠</span>
+            </a>
+            <a href="intercession.html" class="nav-item active">
+                <i class="fa-solid fa-hands-praying"></i>
+                <span>代禱</span>
+            </a>
+            <a href="https://line.me/R/meeting/6e1105b1919945ddad5390853d75be5d" target="_blank" class="nav-item">
+                <i class="fa-solid fa-video"></i>
+                <span>會議</span>
+            </a>
+        </div>
+    </nav>
 
     <footer>
         <p style="font-size: 1.2rem; font-style: italic; margin-bottom: 2rem; font-family: 'Noto Serif TC', serif;">
