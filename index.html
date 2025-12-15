@@ -2,35 +2,27 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <!-- 視口設定：禁止縮放，適配手機 App 模式 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>線上玫瑰經祈禱團體 | 每晚9點 LINE會議室</title>
     <meta name="description" content="由玫瑰經善會成員組成的線上祈禱群組，每晚9點在LINE會議室共融祈禱。">
     
-    <!-- PWA / Web App 設定 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- 修正亂碼：使用 HTML 代碼 (線上玫瑰經) -->
     <meta name="apple-mobile-web-app-title" content="&#32218;&#19978;&#29691;&#29808;&#32147;">
     <meta name="theme-color" content="#003366">
     
-    <!-- App 圖示 -->
     <link rel="icon" type="image/png" href="images/icon.png">
     <link rel="apple-touch-icon" href="images/icon.png">
 
-    <!-- Web App Manifest -->
     <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIue3muS4iueOq5e357pT56WI56ax5ZyY6auUIiwKICAic2hvcnRfbmFtZSI6ICLnQqTkuIrnQqXnt5IiLAogICJzdGFydF91cmwiOiAiaW5kZXguaHRtbCIsCiAgImRpc3BsYXkiOiAic3RhbmRhbG9uZSIsCiAgImJhY2tncm91bmRfY29sb3IiOiAiI0Y1RjdGQSIsCiAgInRoZW1lX2NvbG9yIjogIiMwMDMzNjYiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImltYWdlcy9pY29uLnBuZyIsCiAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAidHlwZSI6ICJpbWFnZS9wbmciCiAgfV0KfQ==">
 
-    <!-- 引入 Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- 引入 Font Awesome 圖示 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- 全域變數：聖母藍 x 原住民編織風格 --- */
         :root {
             --primary-color: #003366; 
             --secondary-color: #4A90E2; 
@@ -43,417 +35,205 @@
             --white: #ffffff;
         }
 
-        /* --- 原住民風格圖騰裝飾 --- */
         .indigenous-strip {
-            height: 15px;
-            width: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                var(--primary-color),
-                var(--primary-color) 10px,
-                var(--accent-color) 10px,
-                var(--accent-color) 12px,
-                var(--white) 12px,
-                var(--white) 14px,
-                var(--secondary-color) 14px,
-                var(--secondary-color) 24px
-            );
+            height: 15px; width: 100%;
+            background: repeating-linear-gradient(45deg, var(--primary-color), var(--primary-color) 10px, var(--accent-color) 10px, var(--accent-color) 12px, var(--white) 12px, var(--white) 14px, var(--secondary-color) 14px, var(--secondary-color) 24px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         .totem-divider {
-            height: 20px;
-            width: 120px;
-            margin: 20px auto 0;
-            background-image: 
-                linear-gradient(60deg, var(--secondary-color) 25%, transparent 25%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color)), 
-                linear-gradient(120deg, var(--secondary-color) 25%, transparent 25%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color));
-            background-position: 0 0, 0 0;
-            background-size: 20px 30px;
-            opacity: 0.8;
+            height: 20px; width: 120px; margin: 20px auto 0;
+            background-image: linear-gradient(60deg, var(--secondary-color) 25%, transparent 25%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color)), linear-gradient(120deg, var(--secondary-color) 25%, transparent 25%, transparent 75%, var(--secondary-color) 75%, var(--secondary-color));
+            background-position: 0 0, 0 0; background-size: 20px 30px; opacity: 0.8;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Noto Sans TC', sans-serif;
-            color: var(--text-color);
-            background-color: var(--bg-color);
+            font-family: 'Noto Sans TC', sans-serif; color: var(--text-color); background-color: var(--bg-color);
             background-image: radial-gradient(#4A90E2 0.5px, transparent 0.5px), radial-gradient(#4A90E2 0.5px, #F5F7FA 0.5px);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
-            background-attachment: fixed;
-            line-height: 1.7;
-            scroll-behavior: smooth;
+            background-size: 20px 20px; background-position: 0 0, 10px 10px; background-attachment: fixed;
+            line-height: 1.7; scroll-behavior: smooth;
             padding-top: env(safe-area-inset-top);
-            padding-bottom: env(safe-area-inset-bottom);
+            /* 手機版下方留白給導覽列 */
+            padding-bottom: calc(70px + env(safe-area-inset-bottom)); 
         }
 
-        h1, h2, h3, h4 {
-            font-family: 'Noto Serif TC', serif;
-            color: var(--primary-color);
-            letter-spacing: 0.05em;
-        }
-
+        h1, h2, h3, h4 { font-family: 'Noto Serif TC', serif; color: var(--primary-color); letter-spacing: 0.05em; }
         a { text-decoration: none; color: inherit; }
 
-        /* --- 導覽列 --- */
         header {
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0, 51, 102, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            padding-top: env(safe-area-inset-top);
-            z-index: 1000;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            height: calc(70px + env(safe-area-inset-top));
-            display: flex;
-            flex-direction: column;
+            position: fixed; width: 100%; top: 0; padding-top: env(safe-area-inset-top);
+            z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.05);
+            height: calc(70px + env(safe-area-inset-top)); display: flex; flex-direction: column;
         }
         
         .header-top-bar {
-            height: 6px;
-            flex-shrink: 0;
-            background: repeating-linear-gradient(
-                90deg,
-                var(--primary-color),
-                var(--primary-color) 20px,
-                var(--secondary-color) 20px,
-                var(--secondary-color) 40px,
-                var(--accent-color) 40px,
-                var(--accent-color) 45px,
-                var(--white) 45px,
-                var(--white) 50px
-            );
+            height: 6px; flex-shrink: 0;
+            background: repeating-linear-gradient(90deg, var(--primary-color), var(--primary-color) 20px, var(--secondary-color) 20px, var(--secondary-color) 40px, var(--accent-color) 40px, var(--accent-color) 45px, var(--white) 45px, var(--white) 50px);
         }
 
-        nav {
-            max-width: 1100px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 100%;
-        }
-
-        .logo {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo-icon-box {
-            width: 44px;
-            height: 44px;
-            background-color: var(--primary-color);
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50% 50% 0 50%; 
-            margin: 5px;
-            box-shadow: 2px 2px 0px var(--accent-color);
-        }
-
+        nav { max-width: 1100px; width: 100%; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; height: 100%; }
+        .logo { font-size: 1.3rem; font-weight: 700; color: var(--primary-color); display: flex; align-items: center; gap: 12px; }
+        .logo-icon-box { width: 44px; height: 44px; background-color: var(--primary-color); color: var(--white); display: flex; align-items: center; justify-content: center; border-radius: 50% 50% 0 50%; margin: 5px; box-shadow: 2px 2px 0px var(--accent-color); }
         .logo-icon-box i { font-size: 1.2rem; margin-top: 2px; color: var(--white); }
         .logo-text { display: flex; flex-direction: column; line-height: 1.2; }
         .logo small { font-size: 0.75rem; font-weight: 400; color: var(--secondary-color); }
 
+        /* 電腦版導覽列 */
         .nav-links { display: flex; gap: 2rem; align-items: center; }
         .nav-links a { font-weight: 600; transition: color 0.3s; color: var(--text-color); position: relative; }
         .nav-links a:hover { color: var(--secondary-color); }
 
         .cta-button-small {
-            background-color: var(--secondary-color);
-            color: var(--white) !important;
-            padding: 0.6rem 1.4rem;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            border-radius: 50px; 
-            box-shadow: 0 4px 6px rgba(74, 144, 226, 0.3);
+            background-color: var(--secondary-color); color: var(--white) !important; padding: 0.6rem 1.4rem;
+            font-size: 0.9rem; transition: all 0.3s; border-radius: 50px; box-shadow: 0 4px 6px rgba(74, 144, 226, 0.3);
         }
-        .cta-button-small:hover { 
-            background-color: var(--primary-color); 
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 51, 102, 0.3);
+        .cta-button-small:hover { background-color: var(--primary-color); transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0, 51, 102, 0.3); }
+
+        /* 隱藏舊的漢堡選單 */
+        .mobile-menu-btn { display: none !important; }
+
+        /* --- 底部導覽列 (App Style) --- */
+        .bottom-nav {
+            display: none; /* 電腦版隱藏 */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: calc(60px + env(safe-area-inset-bottom));
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color);
+            z-index: 9999;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
-        .mobile-menu-btn { display: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-color); }
-
-        /* --- 區塊設定 --- */
-        section { padding: 6rem 1.5rem; max-width: 1000px; margin: 0 auto; }
-        .section-title { text-align: center; margin-bottom: 3.5rem; font-size: 2.2rem; position: relative; font-weight: 700; }
-        
-        /* --- 首頁主視覺 (Hero) --- */
-        #home {
-            min-height: 100vh;
-            background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.6)), url('https://images.unsplash.com/photo-1574602636282-3e2840c92158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center; 
-            color: var(--white);
-            padding-top: calc(130px + env(safe-area-inset-top)); 
-            padding-bottom: 80px;
-            position: relative;
-        }
-        #home::after {
-            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; 
-            background-color: var(--bg-color);
-            mask-image: linear-gradient(45deg, transparent 33%, #000 33%, #000 66%, transparent 66%), linear-gradient(-45deg, transparent 33%, #000 33%, #000 66%, transparent 66%);
-            mask-size: 40px 100%;
-            -webkit-mask-image: linear-gradient(45deg, transparent 33%, #000 33%, #000 66%, transparent 66%), linear-gradient(-45deg, transparent 33%, #000 33%, #000 66%, transparent 66%);
-            -webkit-mask-size: 40px 100%;
-        }
-        
-        #home .subtitle { 
-            font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 2px; 
-            color: var(--accent-color); 
-            background-color: rgba(255,255,255,0.1); 
-            padding: 0.5rem 1.5rem; 
-            border: 1px solid var(--accent-color); 
-            border-radius: 50px;
-        }
-        #home h1 { color: var(--white); font-size: 4rem; margin-bottom: 1rem; text-shadow: 0 4px 15px rgba(0,0,0,0.5); line-height: 1.2; font-family: 'Noto Serif TC', serif; }
-        #home p { font-size: 1.3rem; margin-bottom: 3rem; max-width: 700px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); font-weight: 400; opacity: 0.9; }
-        
-        /* 今日奧蹟卡片樣式 */
-        .mystery-badge {
-            background: rgba(0, 51, 102, 0.5); 
-            backdrop-filter: blur(8px);
-            border: 1px solid var(--accent-color);
-            padding: 0.8rem 1.8rem;
-            border-radius: 50px;
-            margin-bottom: 2.5rem;
-            display: inline-flex;
+        .bottom-nav-inner {
+            display: flex;
+            justify-content: space-around;
             align-items: center;
-            gap: 12px;
-            color: var(--white);
-            font-weight: 500;
-            font-size: 1.15rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            animation: fadeInUp 1s ease-out;
-            letter-spacing: 0.05em;
-        }
-        
-        .mystery-badge i {
-            color: var(--accent-color);
-            font-size: 1.3rem;
-            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+            height: 100%;
+            width: 100%;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- 倒數計時器與按鈕區塊 --- */
-        .cta-wrapper {
+        .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
+            flex: 1;
+            color: #94a3b8; /* 未選中顏色 */
+            text-decoration: none;
+            font-size: 0.75rem;
+            transition: color 0.3s;
+            height: 100%;
         }
 
-        #countdown-timer {
-            font-family: 'Noto Sans TC', sans-serif;
-            color: var(--white);
-            font-size: 1.1rem;
-            font-weight: 500;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0,0,0,0.3);
-            padding: 5px 15px;
-            border-radius: 20px;
+        .nav-item i {
+            font-size: 1.4rem;
+            margin-bottom: 4px;
         }
-        
-        #countdown-timer span {
-            color: var(--accent-color);
+
+        .nav-item.active {
+            color: var(--primary-color);
             font-weight: 700;
-            font-family: monospace;
-            font-size: 1.3rem;
-            letter-spacing: 1px;
         }
 
-        .hero-btn {
-            background-color: var(--accent-color); 
-            color: var(--primary-color); 
-            padding: 1.2rem 3.5rem; 
-            font-size: 1.2rem; 
-            font-weight: 700; 
-            border: none; 
-            transition: all 0.3s;
-            border-radius: 4px;
-            border-bottom: 4px solid #b8962e;
-            text-align: center;
-            min-width: 280px;
-        }
-        .hero-btn:hover { 
-            transform: translateY(-5px); 
-            background-color: #ffe066; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+        /* 手機版樣式調整 */
+        @media (max-width: 768px) {
+            .nav-links { display: none; } /* 隱藏上方導覽 */
+            .bottom-nav { display: block; } /* 顯示下方導覽 */
+            
+            #home h1 { font-size: 2.8rem; }
+            .about-container { grid-template-columns: 1fr; }
+            .hero-btn { border-radius: 4px; padding: 1rem 2rem; }
+            .fab-container { bottom: calc(70px + env(safe-area-inset-bottom)); right: 20px; } /* 避開底部導覽列 */
         }
 
-        .live-btn {
-            background-color: #dc2626 !important; 
-            border-color: #991b1b !important;
-            color: white !important;
-            animation: pulse-live 2s infinite;
-            border-bottom: 4px solid #991b1b;
+        /* 內容樣式省略...與之前相同 */
+        section { padding: 6rem 1.5rem; max-width: 1000px; margin: 0 auto; }
+        .section-title { text-align: center; margin-bottom: 3.5rem; font-size: 2.2rem; position: relative; font-weight: 700; }
+        
+        #home {
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 51, 102, 0.8), rgba(0, 51, 102, 0.6)), url('https://images.unsplash.com/photo-1574602636282-3e2840c92158?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover; background-position: center;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: var(--white);
+            padding-top: calc(130px + env(safe-area-inset-top)); padding-bottom: 80px; position: relative;
         }
-
-        @keyframes pulse-live {
-            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); transform: scale(1); }
-            70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); transform: scale(1.05); }
-            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); transform: scale(1); }
+        #home::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50px; background-color: var(--bg-color);
+            mask-image: linear-gradient(45deg, transparent 33%, #000 33%, #000 66%, transparent 66%), linear-gradient(-45deg, transparent 33%, #000 33%, #000 66%, transparent 66%);
+            mask-size: 40px 100%; -webkit-mask-image: linear-gradient(45deg, transparent 33%, #000 33%, #000 66%, transparent 66%), linear-gradient(-45deg, transparent 33%, #000 33%, #000 66%, transparent 66%);
+            -webkit-mask-size: 40px 100%;
         }
+        #home .subtitle { font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: 2px; color: var(--accent-color); background-color: rgba(255,255,255,0.1); padding: 0.5rem 1.5rem; border: 1px solid var(--accent-color); border-radius: 50px; }
+        #home h1 { color: var(--white); font-size: 4rem; margin-bottom: 1rem; text-shadow: 0 4px 15px rgba(0,0,0,0.5); line-height: 1.2; font-family: 'Noto Serif TC', serif; }
+        #home p { font-size: 1.3rem; margin-bottom: 3rem; max-width: 700px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); font-weight: 400; opacity: 0.9; }
+        
+        .mystery-badge {
+            background: rgba(0, 51, 102, 0.5); backdrop-filter: blur(8px); border: 1px solid var(--accent-color);
+            padding: 0.8rem 1.8rem; border-radius: 50px; margin-bottom: 2.5rem; display: inline-flex; align-items: center; gap: 12px;
+            color: var(--white); font-weight: 500; font-size: 1.15rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3); animation: fadeInUp 1s ease-out; letter-spacing: 0.05em;
+        }
+        .mystery-badge i { color: var(--accent-color); font-size: 1.3rem; filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- 關於我們 --- */
+        .cta-wrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        #countdown-timer { font-family: 'Noto Sans TC', sans-serif; color: var(--white); font-size: 1.1rem; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.3); padding: 5px 15px; border-radius: 20px; }
+        #countdown-timer span { color: var(--accent-color); font-weight: 700; font-family: monospace; font-size: 1.3rem; letter-spacing: 1px; }
+
+        .hero-btn { background-color: var(--accent-color); color: var(--primary-color); padding: 1.2rem 3.5rem; font-size: 1.2rem; font-weight: 700; border: none; transition: all 0.3s; border-radius: 4px; border-bottom: 4px solid #b8962e; text-align: center; min-width: 280px; }
+        .hero-btn:hover { transform: translateY(-5px); background-color: #ffe066; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .live-btn { background-color: #dc2626 !important; border-color: #991b1b !important; color: white !important; animation: pulse-live 2s infinite; border-bottom: 4px solid #991b1b; }
+        @keyframes pulse-live { 0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); transform: scale(1); } 70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); transform: scale(1.05); } 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); transform: scale(1); } }
+
         .about-container { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
         .about-text h3 { font-size: 1.6rem; margin-bottom: 1.5rem; color: var(--secondary-color); border-left: 5px solid var(--primary-color); padding-left: 1rem; }
-        
-        .about-image { 
-            width: 100%; height: 350px; 
-            border: 2px solid var(--primary-color); 
-            padding: 8px; 
-            background-color: var(--section-bg);
-            position: relative; 
-            box-shadow: 10px 10px 0px rgba(74, 144, 226, 0.2);
-        }
-        
-        .about-image img { 
-            width: 100%; height: 100%; object-fit: cover; 
-            filter: contrast(1.05) brightness(1.05);
-        }
-        
-        .about-image::before { 
-            content: ''; position: absolute; top: -6px; left: -6px; width: 40px; height: 40px; 
-            border-top: 6px solid var(--accent-color); border-left: 6px solid var(--accent-color); 
-        }
-        .about-image::after { 
-            content: ''; position: absolute; bottom: -6px; right: -6px; width: 40px; height: 40px; 
-            border-bottom: 6px solid var(--secondary-color); border-right: 6px solid var(--secondary-color); 
-        }
+        .about-image { width: 100%; height: 350px; border: 2px solid var(--primary-color); padding: 8px; background-color: var(--section-bg); position: relative; box-shadow: 10px 10px 0px rgba(74, 144, 226, 0.2); }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05) brightness(1.05); }
+        .about-image::before { content: ''; position: absolute; top: -6px; left: -6px; width: 40px; height: 40px; border-top: 6px solid var(--accent-color); border-left: 6px solid var(--accent-color); }
+        .about-image::after { content: ''; position: absolute; bottom: -6px; right: -6px; width: 40px; height: 40px; border-bottom: 6px solid var(--secondary-color); border-right: 6px solid var(--secondary-color); }
 
-        /* --- 聚會資訊 --- */
-        #info { 
-            background-color: var(--section-bg); 
-            margin-top: 2rem; 
-            box-shadow: 0 10px 30px rgba(0, 51, 102, 0.08); 
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-        }
-        
+        #info { background-color: var(--section-bg); margin-top: 2rem; box-shadow: 0 10px 30px rgba(0, 51, 102, 0.08); border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
         .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: center; padding: 3rem 2rem; }
         .info-card { padding: 1rem; transition: all 0.3s; position: relative; }
-        .info-icon { 
-            width: 80px; height: 80px; margin: 0 auto 1.5rem auto; 
-            background-color: var(--white); 
-            color: var(--primary-color);
-            transform: rotate(45deg); 
-            display: flex; align-items: center; justify-content: center; 
-            border: 2px solid var(--secondary-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+        .info-icon { width: 80px; height: 80px; margin: 0 auto 1.5rem auto; background-color: var(--white); color: var(--primary-color); transform: rotate(45deg); display: flex; align-items: center; justify-content: center; border: 2px solid var(--secondary-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         .info-icon i { transform: rotate(-45deg); font-size: 2rem; color: var(--primary-color); }
         .info-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--primary-color); }
 
-        /* --- 推廣善會 --- */
-        #promote { 
-            background-color: var(--primary-color); 
-            color: var(--white);
-            margin-top: 4rem; 
-            position: relative; 
-            background-image: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.9)), url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E");
-        }
-        
-        #promote::before { 
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 10px;
-            background: repeating-linear-gradient(90deg, var(--accent-color), var(--accent-color) 10px, transparent 10px, transparent 20px);
-        }
-        
+        #promote { background-color: var(--primary-color); color: var(--white); margin-top: 4rem; position: relative; background-image: linear-gradient(rgba(0, 51, 102, 0.9), rgba(0, 51, 102, 0.9)), url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'%3E%3Ccircle cx='3' cy='3' r='3'/%3E%3Ccircle cx='13' cy='13' r='3'/%3E%3C/g%3E%3C/svg%3E"); }
+        #promote::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 10px; background: repeating-linear-gradient(90deg, var(--accent-color), var(--accent-color) 10px, transparent 10px, transparent 20px); }
         .flyer-box { text-align: center; padding: 2rem; position: relative; z-index: 1; }
         .flyer-box h2, .flyer-box h3, .flyer-box .section-title { color: var(--white) !important; }
         .flyer-box .totem-divider { background-image: linear-gradient(60deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color)), linear-gradient(120deg, var(--accent-color) 25%, transparent 25%, transparent 75%, var(--accent-color) 75%, var(--accent-color)); }
+        .organizer-info { margin-top: 2rem; font-size: 1.1rem; color: var(--accent-color); font-weight: 700; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.5rem; display: inline-block; }
 
-        .organizer-info { 
-            margin-top: 2rem; font-size: 1.1rem; color: var(--accent-color); font-weight: 700; 
-            border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.5rem; display: inline-block; 
-        }
-
-        /* --- 代禱牆 --- */
         #prayer-wall { background-color: var(--bg-color); }
         .wall-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
-        
-        .note-card { 
-            background-color: var(--white); 
-            padding: 2rem; 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
-            border-top: 4px solid var(--secondary-color); 
-            border-radius: 8px;
-            display: flex; flex-direction: column; 
-            transition: transform 0.2s; 
-            position: relative; min-height: 180px; 
-        }
-        
+        .note-card { background-color: var(--white); padding: 2rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border-top: 4px solid var(--secondary-color); border-radius: 8px; display: flex; flex-direction: column; transition: transform 0.2s; position: relative; min-height: 180px; }
         .note-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px -3px rgba(0, 51, 102, 0.15); }
         .note-card:nth-child(3n+1) { border-top-color: var(--primary-color); }
         .note-card:nth-child(3n+2) { border-top-color: var(--secondary-color); }
         .note-card:nth-child(3n+3) { border-top-color: var(--accent-color); }
-        
         .note-header { display: flex; align-items: center; margin-bottom: 1rem; color: var(--light-text); font-size: 0.95rem; font-weight: 600; }
         .note-content { font-size: 1.1rem; line-height: 1.6; color: #2C3E50; margin-bottom: 1rem; flex-grow: 1; white-space: pre-wrap; word-wrap: break-word; }
         .note-footer { margin-top: auto; font-size: 0.85rem; color: #95A5A6; border-top: 1px dashed #eee; padding-top: 0.8rem; text-align: right; }
 
-        /* --- 漂浮按鈕 --- */
-        .fab-container { position: fixed; bottom: calc(30px + env(safe-area-inset-bottom)); right: 30px; z-index: 2000; display: flex; flex-direction: column; align-items: end; }
+        .fab-container { position: fixed; bottom: calc(70px + env(safe-area-inset-bottom)); right: 30px; z-index: 2000; display: flex; flex-direction: column; align-items: end; }
         .fab-tooltip { background-color: var(--primary-color); color: var(--white); padding: 5px 10px; font-size: 0.8rem; margin-bottom: 10px; opacity: 0; transition: opacity 0.3s; pointer-events: none; border-radius: 4px; }
-        .fab-btn { 
-            width: 60px; height: 60px; 
-            background-color: var(--secondary-color); color: var(--white); 
-            transform: rotate(45deg); 
-            display: flex; align-items: center; justify-content: center; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-            cursor: pointer; transition: all 0.3s; 
-            border: 2px solid var(--white); text-decoration: none; 
-        }
+        .fab-btn { width: 60px; height: 60px; background-color: var(--secondary-color); color: var(--white); transform: rotate(45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; transition: all 0.3s; border: 2px solid var(--white); text-decoration: none; }
         .fab-btn i { transform: rotate(-45deg); font-size: 1.5rem; }
         .fab-btn:hover { background-color: var(--primary-color); border-color: var(--accent-color); }
         .fab-container:hover .fab-tooltip { opacity: 1; }
 
-        /* --- Footer --- */
-        footer { 
-            background-color: var(--primary-color); color: var(--white); padding: 4rem 1.5rem; text-align: center; 
-            border-top: 8px solid var(--accent-color);
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            padding-bottom: calc(4rem + env(safe-area-inset-bottom));
-        }
+        footer { background-color: var(--primary-color); color: var(--white); padding: 4rem 1.5rem; text-align: center; border-top: 8px solid var(--accent-color); background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); padding-bottom: calc(4rem + 70px + env(safe-area-inset-bottom)); /* 避開底部導覽 */ }
         .social-links a { font-size: 1.5rem; margin: 0 10px; color: var(--accent-color); transition: color 0.3s; }
         .social-links a:hover { color: var(--white); }
-
-        @media (max-width: 768px) {
-            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--section-bg); flex-direction: column; padding: 1.5rem; box-shadow: 0 10px 15px rgba(0,0,0,0.1); border-bottom: 5px solid var(--secondary-color); }
-            .nav-links.active { display: flex; }
-            .nav-links a { margin: 10px 0; width: 100%; text-align: center; }
-            .mobile-menu-btn { display: block; }
-            #home h1 { font-size: 2.8rem; }
-            .about-container { grid-template-columns: 1fr; }
-            .hero-btn { border-radius: 4px; padding: 1rem 2rem; }
-            .fab-container { bottom: calc(20px + env(safe-area-inset-bottom)); right: 20px; }
-        }
     </style>
 </head>
 <body>
@@ -473,7 +253,7 @@
                 <a href="#info">聚會資訊</a>
                 <a href="#promote">加入善會</a>
                 <a href="rosary.html">線上唸珠</a>
-                <a href="#prayer-wall">代禱牆</a>
+                <a href="intercession.html">代禱牆</a>
                 <a href="https://line.me/R/meeting/6e1105b1919945ddad5390853d75be5d" target="_blank" class="cta-button-small">進入會議室</a>
             </div>
             <div class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
@@ -492,7 +272,6 @@
 
         <p>我們是一群玫瑰經善會的成員，每天晚上9點，<br>在雲端齊聚，用祈禱編織對上主的讚美。</p>
         
-        <!-- 新增：倒數計時器與按鈕包裹區 -->
         <div class="cta-wrapper">
             <div id="countdown-timer">
                 <i class="fa-solid fa-hourglass-half"></i> 距離祈禱還有 <span id="timer-display">--:--:--</span>
@@ -501,6 +280,29 @@
         </div>
     </section>
 
+    <!-- 底部導覽列 (僅手機顯示) -->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-inner">
+            <a href="index.html" class="nav-item active">
+                <i class="fa-solid fa-house"></i>
+                <span>首頁</span>
+            </a>
+            <a href="rosary.html" class="nav-item">
+                <i class="fa-solid fa-bullseye"></i>
+                <span>唸珠</span>
+            </a>
+            <a href="intercession.html" class="nav-item">
+                <i class="fa-solid fa-hands-praying"></i>
+                <span>代禱</span>
+            </a>
+            <a href="https://line.me/R/meeting/6e1105b1919945ddad5390853d75be5d" target="_blank" class="nav-item">
+                <i class="fa-solid fa-video"></i>
+                <span>會議</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- 其餘內容省略... -->
     <section id="about">
         <h2 class="section-title">關於祈禱群組<div class="totem-divider"></div></h2>
         <div class="about-container">
@@ -722,66 +524,32 @@
             }
         }
 
-        // --- 取得台灣時間的 Date 物件 (用於顯示與計算，忽略瀏覽器時區差異) ---
+        // --- 取得台灣時間 ---
         function getTaiwanDate() {
             const now = new Date();
-            // 使用 Intl API 轉換為台灣時間字串
-            const options = {
-                timeZone: "Asia/Taipei",
-                year: 'numeric', month: 'numeric', day: 'numeric',
-                hour: 'numeric', minute: 'numeric', second: 'numeric',
-                hour12: false
-            };
+            const options = { timeZone: "Asia/Taipei", year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false };
             const formatter = new Intl.DateTimeFormat('en-US', options);
             const parts = formatter.formatToParts(now);
-            
             const dateParts = {};
             parts.forEach(({type, value}) => { dateParts[type] = value; });
-            
-            // 建立一個 "看起來是台灣時間" 但實際上是本地時區的 Date 物件
-            // 這樣做是為了方便用 setHours 等方法做倒數計算
-            return new Date(
-                dateParts.year,
-                dateParts.month - 1, // 月份從 0 開始
-                dateParts.day,
-                dateParts.hour,
-                dateParts.minute,
-                dateParts.second
-            );
+            return new Date(dateParts.year, dateParts.month - 1, dateParts.day, dateParts.hour, dateParts.minute, dateParts.second);
         }
 
         // --- 自動判斷今日玫瑰經奧蹟 ---
         function setDailyMystery() {
-            // 使用台灣時間來判斷星期幾
             const taiwanNow = getTaiwanDate();
-            const today = taiwanNow.getDay(); // 0 = 週日, 1 = 週一, ...
+            const today = taiwanNow.getDay(); 
             const mysteryText = document.getElementById('mystery-text');
             const mysteryIcon = document.getElementById('mystery-icon');
             
-            // 玫瑰經奧蹟對照表
             let mysteryName = "";
             let iconClass = "";
 
             switch(today) {
-                case 1: // Mon
-                case 6: // Sat
-                    mysteryName = "歡喜五端 (Joyful Mysteries)";
-                    iconClass = "fa-face-smile-beam"; 
-                    break;
-                case 2: // Tue
-                case 5: // Fri
-                    mysteryName = "痛苦五端 (Sorrowful Mysteries)";
-                    iconClass = "fa-heart-pulse"; // 用心跳或十架
-                    break;
-                case 3: // Wed
-                case 0: // Sun
-                    mysteryName = "榮福五端 (Glorious Mysteries)";
-                    iconClass = "fa-crown"; // 皇冠
-                    break;
-                case 4: // Thu
-                    mysteryName = "光明五端 (Luminous Mysteries)";
-                    iconClass = "fa-sun"; // 太陽/光芒
-                    break;
+                case 1: case 6: mysteryName = "歡喜五端 (Joyful Mysteries)"; iconClass = "fa-face-smile-beam"; break;
+                case 2: case 5: mysteryName = "痛苦五端 (Sorrowful Mysteries)"; iconClass = "fa-heart-pulse"; break;
+                case 3: case 0: mysteryName = "榮福五端 (Glorious Mysteries)"; iconClass = "fa-crown"; break;
+                case 4: mysteryName = "光明五端 (Luminous Mysteries)"; iconClass = "fa-sun"; break;
             }
 
             if (mysteryText && mysteryIcon) {
@@ -790,55 +558,33 @@
             }
         }
 
-        // --- 新增：祈禱倒數計時器 Logic (使用台灣時間) ---
+        // --- 新增：祈禱倒數計時器 Logic ---
         function updateCountdown() {
-            // 取得台灣時間的 Date 物件
             const now = getTaiwanDate();
-            
             const timerDisplay = document.getElementById('timer-display');
             const countdownContainer = document.getElementById('countdown-timer');
             const heroBtn = document.getElementById('hero-cta-btn');
             
-            // 設定目標時間：今天的 21:00 (基於台灣時間)
-            let target = new Date(now);
-            target.setHours(21, 0, 0, 0);
-            
-            // 設定結束時間：今天的 21:40 (基於台灣時間)
-            let endTime = new Date(now);
-            endTime.setHours(21, 40, 0, 0);
+            let target = new Date(now); target.setHours(21, 0, 0, 0);
+            let endTime = new Date(now); endTime.setHours(21, 40, 0, 0);
 
-            // 狀態判斷
             if (now >= target && now < endTime) {
-                // 正在祈禱中 (21:00 - 21:40)
                 countdownContainer.innerHTML = '<i class="fa-solid fa-podcast" style="color:#ef4444;"></i> <span style="color:#fff; background:none;">祈禱正在進行中</span>';
                 heroBtn.classList.add('live-btn');
                 heroBtn.innerHTML = '<i class="fa-solid fa-video"></i> 立即進入會議室';
-                // 這裡可以直接改連結到會議室，或者維持連到 #info
-                // heroBtn.href = "https://line.me/R/meeting/..."; 
             } else {
-                // 非祈禱時間，計算倒數
                 heroBtn.classList.remove('live-btn');
                 heroBtn.innerHTML = "加入今晚的祈禱";
-                
-                // 如果已經過了今天的 21:40，目標設為明天的 21:00
-                if (now >= endTime) {
-                    target.setDate(target.getDate() + 1);
-                }
+                if (now >= endTime) target.setDate(target.getDate() + 1);
 
                 const diff = target - now;
-                
-                // 計算時分秒
                 const h = Math.floor(diff / (1000 * 60 * 60));
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-                // 補零
                 const hh = h.toString().padStart(2, '0');
                 const mm = m.toString().padStart(2, '0');
                 const ss = s.toString().padStart(2, '0');
 
-                // 更新顯示
-                // 為了避免每次都重寫 innerHTML 導致閃爍，只在非進行中狀態更新文字
                 if (!countdownContainer.innerHTML.includes("距離祈禱還有")) {
                      countdownContainer.innerHTML = '<i class="fa-solid fa-hourglass-half"></i> 距離祈禱還有 <span id="timer-display"></span>';
                 }
@@ -847,7 +593,7 @@
             }
         }
 
-        // --- 讓 PWA 模式下的連結在 App 內開啟，而不是跳出到 Safari ---
+        // PWA Link Handling
         document.addEventListener('click', function (event) {
             var a = event.target.closest('a');
             if (a && a.href.startsWith(window.location.origin) && a.target !== '_blank') {
@@ -859,15 +605,11 @@
 
         // 每秒更新
         setInterval(updateCountdown, 1000);
-        updateCountdown(); // 初次執行
+        updateCountdown();
 
         // 初始化
         setDailyMystery();
         fetchAndRenderNotes();
-
-        const mobileBtn = document.querySelector('.mobile-menu-btn');
-        const navLinks = document.querySelector('.nav-links');
-        mobileBtn.addEventListener('click', () => { navLinks.classList.toggle('active'); });
     </script>
 </body>
 </html>
