@@ -10,10 +10,11 @@
     <!-- PWA / Web App 設定 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="線上玫瑰經">
+    <!-- 修正亂碼：使用 HTML 代碼 (線上玫瑰經) -->
+    <meta name="apple-mobile-web-app-title" content="&#32218;&#19978;&#29691;&#29808;&#32147;">
     <meta name="theme-color" content="#003366">
     
-    <!-- App 圖示：直接連結到 images/icon.png -->
+    <!-- App 圖示 -->
     <link rel="icon" type="image/png" href="images/icon.png">
     <link rel="apple-touch-icon" href="images/icon.png">
 
@@ -29,28 +30,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* --- 全域變數：聖母藍 x 原住民編織風格 (Marian Blue & Indigenous Weaving) --- */
+        /* --- 全域變數：聖母藍 x 原住民編織風格 --- */
         :root {
-            /* 主色：聖母深藍 (象徵深邃的信德與聖母的長袍) */
             --primary-color: #003366; 
-            /* 次要色：天空藍 (象徵天堂與純潔) */
             --secondary-color: #4A90E2; 
-            /* 強調色：榮耀金 (象徵聖母皇冠與原住民飾品中的貴氣) */
             --accent-color: #D4AF37; 
-            
-            /* 背景色：雲靄白 */
             --bg-color: #F5F7FA;
-            /* 區塊背景：純白 */
             --section-bg: #FFFFFF;
-            /* 邊框色 */
             --border-color: #DAE1E7;
-            
             --text-color: #2C3E50; 
             --light-text: #5D6D7E; 
             --white: #ffffff;
         }
 
-        /* --- 原住民風格圖騰裝飾 (藍金編織版) --- */
+        /* --- 原住民風格圖騰裝飾 --- */
         .indigenous-strip {
             height: 15px;
             width: 100%;
@@ -68,7 +61,6 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
-        /* 菱形祖靈之眼/編織紋分隔線 */
         .totem-divider {
             height: 20px;
             width: 120px;
@@ -81,7 +73,6 @@
             opacity: 0.8;
         }
 
-        /* --- 基礎設定 --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
@@ -94,7 +85,6 @@
             background-attachment: fixed;
             line-height: 1.7;
             scroll-behavior: smooth;
-            /* PWA 適配 */
             padding-top: env(safe-area-inset-top);
             padding-bottom: env(safe-area-inset-bottom);
         }
@@ -118,7 +108,7 @@
             padding-top: env(safe-area-inset-top);
             z-index: 1000;
             border-bottom: 1px solid rgba(0,0,0,0.05);
-            height: calc(70px + env(safe-area-inset-top)); /* 自動增加高度 */
+            height: calc(70px + env(safe-area-inset-top));
             display: flex;
             flex-direction: column;
         }
@@ -213,7 +203,6 @@
             align-items: center; 
             text-align: center; 
             color: var(--white);
-            /* 適配 PWA 頂部 padding */
             padding-top: calc(130px + env(safe-area-inset-top)); 
             padding-bottom: 80px;
             position: relative;
@@ -317,9 +306,8 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
         }
 
-        /* 祈禱進行中的按鈕特效 (Live) */
         .live-btn {
-            background-color: #dc2626 !important; /* 紅色 */
+            background-color: #dc2626 !important; 
             border-color: #991b1b !important;
             color: white !important;
             animation: pulse-live 2s infinite;
@@ -451,7 +439,6 @@
             background-color: var(--primary-color); color: var(--white); padding: 4rem 1.5rem; text-align: center; 
             border-top: 8px solid var(--accent-color);
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-            /* 適配 PWA 底部 */
             padding-bottom: calc(4rem + env(safe-area-inset-bottom));
         }
         .social-links a { font-size: 1.5rem; margin: 0 10px; color: var(--accent-color); transition: color 0.3s; }
@@ -735,9 +722,39 @@
             }
         }
 
+        // --- 取得台灣時間的 Date 物件 (用於顯示與計算，忽略瀏覽器時區差異) ---
+        function getTaiwanDate() {
+            const now = new Date();
+            // 使用 Intl API 轉換為台灣時間字串
+            const options = {
+                timeZone: "Asia/Taipei",
+                year: 'numeric', month: 'numeric', day: 'numeric',
+                hour: 'numeric', minute: 'numeric', second: 'numeric',
+                hour12: false
+            };
+            const formatter = new Intl.DateTimeFormat('en-US', options);
+            const parts = formatter.formatToParts(now);
+            
+            const dateParts = {};
+            parts.forEach(({type, value}) => { dateParts[type] = value; });
+            
+            // 建立一個 "看起來是台灣時間" 但實際上是本地時區的 Date 物件
+            // 這樣做是為了方便用 setHours 等方法做倒數計算
+            return new Date(
+                dateParts.year,
+                dateParts.month - 1, // 月份從 0 開始
+                dateParts.day,
+                dateParts.hour,
+                dateParts.minute,
+                dateParts.second
+            );
+        }
+
         // --- 自動判斷今日玫瑰經奧蹟 ---
         function setDailyMystery() {
-            const today = new Date().getDay(); // 0 = 週日, 1 = 週一, ...
+            // 使用台灣時間來判斷星期幾
+            const taiwanNow = getTaiwanDate();
+            const today = taiwanNow.getDay(); // 0 = 週日, 1 = 週一, ...
             const mysteryText = document.getElementById('mystery-text');
             const mysteryIcon = document.getElementById('mystery-icon');
             
@@ -773,19 +790,21 @@
             }
         }
 
-        // --- 新增：祈禱倒數計時器 Logic ---
+        // --- 新增：祈禱倒數計時器 Logic (使用台灣時間) ---
         function updateCountdown() {
-            const now = new Date();
+            // 取得台灣時間的 Date 物件
+            const now = getTaiwanDate();
+            
             const timerDisplay = document.getElementById('timer-display');
             const countdownContainer = document.getElementById('countdown-timer');
             const heroBtn = document.getElementById('hero-cta-btn');
             
-            // 設定目標時間：今天的 21:00
-            let target = new Date();
+            // 設定目標時間：今天的 21:00 (基於台灣時間)
+            let target = new Date(now);
             target.setHours(21, 0, 0, 0);
             
-            // 設定結束時間：今天的 21:40
-            let endTime = new Date();
+            // 設定結束時間：今天的 21:40 (基於台灣時間)
+            let endTime = new Date(now);
             endTime.setHours(21, 40, 0, 0);
 
             // 狀態判斷
@@ -832,10 +851,7 @@
         document.addEventListener('click', function (event) {
             var a = event.target.closest('a');
             if (a && a.href.startsWith(window.location.origin) && a.target !== '_blank') {
-                // 如果只是錨點 (#)，讓預設行為處理 (平滑滾動等)
-                // 但如果是不同頁面的連結，強制更改 location
                 if (a.pathname === window.location.pathname && a.hash) return;
-                
                 event.preventDefault();
                 window.location.href = a.href;
             }
