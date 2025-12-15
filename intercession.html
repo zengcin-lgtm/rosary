@@ -569,7 +569,7 @@
             return result;
         }
 
-        // --- 新增：Accordion 開關邏輯 ---
+        // --- 新增：Accordion 開關邏輯 (高度修正版) ---
         function toggleAccordion() {
             const body = document.getElementById('accordion-body');
             const icon = document.getElementById('accordion-icon');
@@ -583,7 +583,8 @@
             } else {
                 // 展開
                 body.classList.add('active');
-                body.style.maxHeight = body.scrollHeight + "px";
+                // 加入 200px 緩衝值，解決手機版文字被截斷問題
+                body.style.maxHeight = (body.scrollHeight + 200) + "px";
                 icon.classList.remove('fa-chevron-down');
                 icon.classList.add('fa-chevron-up');
             }
